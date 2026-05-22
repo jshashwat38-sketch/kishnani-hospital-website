@@ -622,7 +622,7 @@ class DatabaseWrapper {
       return cmsData;
     }
 
-    const rows = await (sql as any)(`SELECT * FROM ${table}`);
+    const rows = await sql.query(`SELECT * FROM ${table}`);
     
     // Explicit type casts for boolean and arrays from JSONB columns for downstream files
     if (table === 'patients') {
@@ -728,7 +728,7 @@ class DatabaseWrapper {
 
   public async update<K extends keyof DatabaseSchema>(table: K, id: string, updates: any): Promise<any> {
     await this.ensureInitialized();
-    const rows = await (sql as any)(`SELECT * FROM ${table} WHERE id = $1`, [id]);
+    const rows = await sql.query(`SELECT * FROM ${table} WHERE id = $1`, [id]);
     const row = rows[0];
     if (!row) return null;
 
@@ -806,7 +806,7 @@ class DatabaseWrapper {
 
   public async delete<K extends keyof DatabaseSchema>(table: K, id: string): Promise<boolean> {
     await this.ensureInitialized();
-    await (sql as any)(`DELETE FROM ${table} WHERE id = $1`, [id]);
+    await sql.query(`DELETE FROM ${table} WHERE id = $1`, [id]);
     return true;
   }
 
