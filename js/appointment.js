@@ -225,8 +225,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // FORM SUBMISSION (LOCAL STORAGE CACHE & SIMULATED API CALLS)
-    wizardForm.addEventListener("submit", (e) => {
+    // Dynamic API URL resolver for local hard drive vs Vercel live environments
+    const getApiUrl = (endpoint) => {
+        if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.protocol === "file:") {
+            return `http://localhost:3000/api/${endpoint}`;
+        }
+        return `/dashboard/api/${endpoint}`;
+    };
+
+    // FORM SUBMISSION (LOCAL HARD DRIVE SYNCHRONIZED API CALLS)
+    wizardForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         if (!validateStep(currentStep)) {
@@ -250,28 +258,45 @@ document.addEventListener("DOMContentLoaded", () => {
         btnSubmit.disabled = true;
         btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing Booking...';
 
-        setTimeout(() => {
-            // Generate mock booking ID
-            const bookingId = "KH-" + Math.floor(100000 + Math.random() * 900000);
+        const bookingPayload = {
+            patientName,
+            phone: patientPhone,
+            dept: department,
+            doctorName: doctorText,
+            date: apptDate,
+            time: apptTime,
+            priority: "Routine",
+            status: "Pending",
+            notes: message
+        };
 
-            // Store in LocalStorage
+        try {
+            const response = await fetch(getApiUrl("appointments"), {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(bookingPayload)
+            });
+
+            let bookingId = "KH-" + Math.floor(100000 + Math.random() * 900000);
+            
+            if (response.ok) {
+                const data = await response.json();
+                if (data.appointment && data.appointment.id) {
+                    bookingId = data.appointment.id;
+                }
+            }
+
+            // Also keep a copy in local storage cache
             const bookingRecord = {
                 bookingId,
-                patientName,
-                patientPhone,
-                department,
-                doctor: doctorText,
-                apptDate,
-                apptTime,
-                message,
+                ...bookingPayload,
                 createdAt: new Date().toISOString()
             };
-
             const existingBookings = JSON.parse(localStorage.getItem("kishnani_bookings") || "[]");
             existingBookings.push(bookingRecord);
             localStorage.setItem("kishnani_bookings", JSON.stringify(existingBookings));
 
-            // Render Success details
+            // Render Success details in card
             document.getElementById("summary-booking-id").textContent = bookingId;
             document.getElementById("summary-patient-name").textContent = patientName;
             document.getElementById("summary-phone").textContent = patientPhone;
@@ -280,7 +305,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("summary-date").textContent = apptDate;
             document.getElementById("summary-time").textContent = apptTime;
 
-            // Trigger animations
+            // Trigger success page shift
             formContainer.style.display = "none";
             successContainer.style.display = "block";
 
@@ -294,7 +319,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Scroll success block into view
             document.querySelector(".appointment-wizard-wrapper").scrollIntoView({ behavior: "smooth" });
-        }, 1500); // 1.5 second artificial load delay for premium feeling
+
+        } catch (error) {
+            console.warn("Backend API not reachable. Saving to browser cache only.", error);
+            
+            // Standard fallback offline booking flow
+            const bookingId = "KH-" + Math.floor(100000 + Math.random() * 900000);
+            const bookingRecord = {
+                bookingId,
+                ...bookingPayload,
+                createdAt: new Date().toISOString()
+            };
+            const existingBookings = JSON.parse(localStorage.getItem("kishnani_bookings") || "[]");
+            existingBookings.push(bookingRecord);
+            localStorage.setItem("kishnani_bookings", JSON.stringify(existingBookings));
+
+            document.getElementById("summary-booking-id").textContent = bookingId;
+            document.getElementById("summary-patient-name").textContent = patientName;
+            document.getElementById("summary-phone").textContent = patientPhone;
+            document.getElementById("summary-department").textContent = department;
+            document.getElementById("summary-doctor").textContent = doctorText;
+            document.getElementById("summary-date").textContent = apptDate;
+            document.getElementById("summary-time").textContent = apptTime;
+
+            formContainer.style.display = "none";
+            successContainer.style.display = "block";
+
+            if (window.showToast) {
+                window.showToast("Local Cache Scheduled", "Saved locally on your browser. Start dev server to sync.", "info");
+            }
+            document.querySelector(".appointment-wizard-wrapper").scrollIntoView({ behavior: "smooth" });
+        }
     });
 
     // Initialize Layout & URL Checks

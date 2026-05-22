@@ -61,6 +61,17 @@ export default function DepartmentsPage() {
 
   useEffect(() => {
     setIsMounted(true);
+    fetch("/api/departments")
+      .then(res => {
+        if (res.ok) return res.json();
+        throw new Error("Failed to load departments");
+      })
+      .then(data => {
+        if (data && Array.isArray(data)) {
+          setDepts(data);
+        }
+      })
+      .catch(err => console.error(err));
   }, []);
 
   if (!isMounted) {
@@ -92,34 +103,62 @@ export default function DepartmentsPage() {
     setIsDrawerOpen(true);
   };
 
-  const handleSaveDept = (e: React.FormEvent) => {
+  const handleSaveDept = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingDept) return;
 
+    // Optimistic UI update
     setDepts(prev => prev.map(d => d.id === editingDept.id ? editingDept : d));
     setIsDrawerOpen(false);
-    addNotification(
-      "Department Configured",
-      `Successfully updated ${editingDept.name} limits & HOD details.`,
-      "success"
-    );
+
+    try {
+      const res = await fetch("/api/departments", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(editingDept)
+      });
+      if (res.ok) {
+        addNotification(
+          "Department Configured",
+          `Successfully updated ${editingDept.name} limits & HOD details.`,
+          "success"
+        );
+      } else {
+        throw new Error("Failed to save department");
+      }
+    } catch (err) {
+      addNotification("Sync Error", `Failed to save changes. Operating offline.`, "error");
+    }
+
     setEditingDept(null);
   };
 
-  const toggleDeptStatus = (id: string) => {
-    const updated = depts.map(d => {
-      if (d.id === id) {
-        const nextState = !d.active;
-        addNotification(
-          "Department Status Changed",
-          `${d.name} is now ${nextState ? "Active/Operational" : "Deactivated/On Leave"}`,
-          nextState ? "success" : "warning"
-        );
-        return { ...d, active: nextState };
-      }
-      return d;
-    });
-    setDepts(updated);
+  const toggleDeptStatus = async (id: string) => {
+    const targetDept = depts.find(d => d.id === id);
+    if (!targetDept) return;
+
+    const nextState = !targetDept.active;
+    const updatedDept = { ...targetDept, active: nextState };
+
+    // Optimistic UI update
+    setDepts(prev => prev.map(d => d.id === id ? updatedDept : d));
+    
+    addNotification(
+      "Department Status Changed",
+      `${targetDept.name} is now ${nextState ? "Active/Operational" : "Deactivated/On Leave"}`,
+      nextState ? "success" : "warning"
+    );
+
+    try {
+      const res = await fetch("/api/departments", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedDept)
+      });
+      if (!res.ok) throw new Error("Failed to toggle department status");
+    } catch (err) {
+      addNotification("Sync Error", `Failed to save status change. Operating offline.`, "error");
+    }
   };
 
   return (
