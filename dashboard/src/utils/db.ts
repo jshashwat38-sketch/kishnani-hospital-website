@@ -1,15 +1,15 @@
-import Database from 'better-sqlite3';
-import path from 'path';
+import { neon } from '@neondatabase/serverless';
 
-// Define the file path on your local computer's hard drive
-const DB_FILE = path.join(process.cwd(), 'hospital_database.db');
+// Retrieve connection string from environment variables
+const DATABASE_URL = process.env.POSTGRES_URL || process.env.DATABASE_URL;
 
-// Reuse SQLite connection in development to prevent file handle exhaustion
-const globalForDb = global as unknown as { sqliteDb: Database.Database };
-const sqliteDb = globalForDb.sqliteDb || new Database(DB_FILE);
-if (process.env.NODE_ENV !== 'production') globalForDb.sqliteDb = sqliteDb;
+if (!DATABASE_URL) {
+  console.warn("WARNING: DATABASE_URL or POSTGRES_URL environment variables are not set! Connecting to empty fallback.");
+}
 
-// Interface structures matching AppContext.tsx EXACTLY
+const sql = neon(DATABASE_URL || 'postgres://dummy:dummy@localhost:5432/dummy');
+
+// Interface structures matching AppContext.tsx EXACTLY for complete type safety
 export interface Patient {
   id: string;
   name: string;
@@ -103,7 +103,6 @@ export interface DepartmentData {
   description: string;
 }
 
-
 export interface CMSData {
   hero: {
     title: string;
@@ -137,7 +136,7 @@ export interface DatabaseSchema {
   departments: DepartmentData[];
 }
 
-// Initial mockup data to seed the database if it doesn't exist on disk
+// Initial mockup data to seed the database if it doesn't exist in PostgreSQL
 const INITIAL_DATA: DatabaseSchema = {
   patients: [
     {
@@ -363,289 +362,279 @@ const INITIAL_DATA: DatabaseSchema = {
 
 class DatabaseWrapper {
   constructor() {
-    this.init();
-  }
-
-  private init() {
-    try {
-      // 1. Create SQL tables if they do not exist
-      sqliteDb.exec(`
-        CREATE TABLE IF NOT EXISTS patients (
-          id TEXT PRIMARY KEY,
-          name TEXT NOT NULL,
-          age INTEGER,
-          gender TEXT,
-          phone TEXT NOT NULL,
-          bloodGroup TEXT,
-          status TEXT,
-          ward TEXT,
-          admissionDate TEXT,
-          history TEXT,
-          reports TEXT,
-          prescriptions TEXT
-        );
-
-        CREATE TABLE IF NOT EXISTS doctors (
-          id TEXT PRIMARY KEY,
-          name TEXT NOT NULL,
-          specialty TEXT,
-          dept TEXT,
-          availability TEXT,
-          schedule TEXT,
-          leaves TEXT
-        );
-
-        CREATE TABLE IF NOT EXISTS appointments (
-          id TEXT PRIMARY KEY,
-          patientName TEXT NOT NULL,
-          doctorName TEXT,
-          date TEXT NOT NULL,
-          time TEXT NOT NULL,
-          dept TEXT,
-          status TEXT,
-          priority TEXT
-        );
-
-        CREATE TABLE IF NOT EXISTS leads (
-          id TEXT PRIMARY KEY,
-          name TEXT NOT NULL,
-          phone TEXT NOT NULL,
-          type TEXT,
-          message TEXT,
-          date TEXT,
-          status TEXT
-        );
-
-        CREATE TABLE IF NOT EXISTS notifications (
-          id TEXT PRIMARY KEY,
-          title TEXT NOT NULL,
-          message TEXT,
-          time TEXT,
-          type TEXT,
-          read INTEGER DEFAULT 0
-        );
-
-        CREATE TABLE IF NOT EXISTS blogs (
-          id TEXT PRIMARY KEY,
-          title TEXT NOT NULL,
-          author TEXT,
-          category TEXT,
-          status TEXT,
-          publishedDate TEXT,
-          readTime TEXT,
-          content TEXT,
-          tags TEXT
-        );
-
-        CREATE TABLE IF NOT EXISTS testimonials (
-          id TEXT PRIMARY KEY,
-          patientName TEXT,
-          name TEXT,
-          treatment TEXT,
-          rating INTEGER,
-          date TEXT,
-          comment TEXT,
-          review TEXT,
-          sentiment TEXT,
-          status TEXT,
-          approved INTEGER DEFAULT 0
-        );
-
-        CREATE TABLE IF NOT EXISTS cms (
-          section TEXT PRIMARY KEY,
-          data TEXT NOT NULL
-        );
-
-        CREATE TABLE IF NOT EXISTS departments (
-          id TEXT PRIMARY KEY,
-          name TEXT NOT NULL,
-          head TEXT,
-          category TEXT,
-          doctorsCount INTEGER,
-          patientsCount INTEGER,
-          opdLimit INTEGER,
-          active INTEGER DEFAULT 1,
-          description TEXT
-        );
-      `);
-
-      // 2. Run seeders inside a clean transactional module if tables are empty
-      this.seed();
-    } catch (error) {
-      console.error('Failed to initialize SQLite database. Operating with degraded parameters.', error);
+    // Background async initialization of the tables and seeds
+    if (DATABASE_URL) {
+      this.init().then(() => {
+        console.log("PostgreSQL database tables verified and loaded successfully.");
+      }).catch((err) => {
+        console.error("PostgreSQL database initialization failed:", err);
+      });
     }
   }
 
-  private seed() {
-    sqliteDb.transaction(() => {
-      // Seed patients
-      const patientsCount = (sqliteDb.prepare('SELECT COUNT(*) as count FROM patients').get() as any).count;
-      if (patientsCount === 0) {
-        const stmt = sqliteDb.prepare(`
-          INSERT INTO patients (id, name, age, gender, phone, bloodGroup, status, ward, admissionDate, history, reports, prescriptions)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        `);
-        for (const p of INITIAL_DATA.patients) {
-          stmt.run(
-            p.id,
-            p.name,
-            p.age,
-            p.gender,
-            p.phone,
-            p.bloodGroup,
-            p.status,
-            p.ward,
-            p.admissionDate,
-            JSON.stringify(p.history),
-            JSON.stringify(p.reports),
-            JSON.stringify(p.prescriptions)
-          );
-        }
-      }
+  private async init() {
+    // 1. Create SQL tables if they do not exist
+    await sql`
+      CREATE TABLE IF NOT EXISTS patients (
+        id VARCHAR(50) PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        age INTEGER,
+        gender VARCHAR(20),
+        phone VARCHAR(50) NOT NULL,
+        bloodGroup VARCHAR(10),
+        status VARCHAR(50),
+        ward VARCHAR(100),
+        admissionDate VARCHAR(50),
+        history JSONB,
+        reports JSONB,
+        prescriptions JSONB
+      );
+    `;
 
-      // Seed doctors
-      const doctorsCount = (sqliteDb.prepare('SELECT COUNT(*) as count FROM doctors').get() as any).count;
-      if (doctorsCount === 0) {
-        const stmt = sqliteDb.prepare(`
-          INSERT INTO doctors (id, name, specialty, dept, availability, schedule, leaves)
-          VALUES (?, ?, ?, ?, ?, ?, ?)
-        `);
-        for (const d of INITIAL_DATA.doctors) {
-          stmt.run(d.id, d.name, d.specialty, d.dept, d.availability, d.schedule, JSON.stringify(d.leaves));
-        }
-      }
+    await sql`
+      CREATE TABLE IF NOT EXISTS doctors (
+        id VARCHAR(50) PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        specialty VARCHAR(150),
+        dept VARCHAR(100),
+        availability VARCHAR(50),
+        schedule VARCHAR(100),
+        leaves JSONB
+      );
+    `;
 
-      // Seed appointments
-      const appointmentsCount = (sqliteDb.prepare('SELECT COUNT(*) as count FROM appointments').get() as any).count;
-      if (appointmentsCount === 0) {
-        const stmt = sqliteDb.prepare(`
-          INSERT INTO appointments (id, patientName, doctorName, date, time, dept, status, priority)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        `);
-        for (const a of INITIAL_DATA.appointments) {
-          stmt.run(a.id, a.patientName, a.doctorName, a.date, a.time, a.dept, a.status, a.priority);
-        }
-      }
+    await sql`
+      CREATE TABLE IF NOT EXISTS appointments (
+        id VARCHAR(50) PRIMARY KEY,
+        patientName VARCHAR(100) NOT NULL,
+        doctorName VARCHAR(100),
+        date VARCHAR(50) NOT NULL,
+        time VARCHAR(50) NOT NULL,
+        dept VARCHAR(100),
+        status VARCHAR(50),
+        priority VARCHAR(50)
+      );
+    `;
 
-      // Seed leads
-      const leadsCount = (sqliteDb.prepare('SELECT COUNT(*) as count FROM leads').get() as any).count;
-      if (leadsCount === 0) {
-        const stmt = sqliteDb.prepare(`
-          INSERT INTO leads (id, name, phone, type, message, date, status)
-          VALUES (?, ?, ?, ?, ?, ?, ?)
-        `);
-        for (const l of INITIAL_DATA.leads) {
-          stmt.run(l.id, l.name, l.phone, l.type, l.message, l.date, l.status);
-        }
-      }
+    await sql`
+      CREATE TABLE IF NOT EXISTS leads (
+        id VARCHAR(50) PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        phone VARCHAR(50) NOT NULL,
+        type VARCHAR(100),
+        message TEXT,
+        date VARCHAR(50),
+        status VARCHAR(50)
+      );
+    `;
 
-      // Seed notifications
-      const notificationsCount = (sqliteDb.prepare('SELECT COUNT(*) as count FROM notifications').get() as any).count;
-      if (notificationsCount === 0) {
-        const stmt = sqliteDb.prepare(`
-          INSERT INTO notifications (id, title, message, time, type, read)
-          VALUES (?, ?, ?, ?, ?, ?)
-        `);
-        for (const n of INITIAL_DATA.notifications) {
-          stmt.run(n.id, n.title, n.message, n.time, n.type, n.read ? 1 : 0);
-        }
-      }
+    await sql`
+      CREATE TABLE IF NOT EXISTS notifications (
+        id VARCHAR(50) PRIMARY KEY,
+        title VARCHAR(150) NOT NULL,
+        message TEXT,
+        time VARCHAR(100),
+        type VARCHAR(50),
+        read BOOLEAN DEFAULT FALSE
+      );
+    `;
 
-      // Seed blogs
-      const blogsCount = (sqliteDb.prepare('SELECT COUNT(*) as count FROM blogs').get() as any).count;
-      if (blogsCount === 0) {
-        const stmt = sqliteDb.prepare(`
-          INSERT INTO blogs (id, title, author, category, status, publishedDate, readTime, content, tags)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        `);
-        for (const b of INITIAL_DATA.blogs) {
-          stmt.run(b.id, b.title, b.author, b.category, b.status, b.publishedDate, b.readTime, b.content, JSON.stringify(b.tags));
-        }
-      }
+    await sql`
+      CREATE TABLE IF NOT EXISTS blogs (
+        id VARCHAR(50) PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        author VARCHAR(100),
+        category VARCHAR(100),
+        status VARCHAR(50),
+        publishedDate VARCHAR(50),
+        readTime VARCHAR(50),
+        content TEXT,
+        tags JSONB
+      );
+    `;
 
-      // Seed testimonials
-      const testimonialsCount = (sqliteDb.prepare('SELECT COUNT(*) as count FROM testimonials').get() as any).count;
-      if (testimonialsCount === 0) {
-        const stmt = sqliteDb.prepare(`
-          INSERT INTO testimonials (id, patientName, name, treatment, rating, date, comment, review, sentiment, status, approved)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        `);
-        for (const t of INITIAL_DATA.testimonials) {
-          stmt.run(
-            t.id,
-            t.patientName,
-            t.name,
-            t.treatment,
-            t.rating,
-            t.date,
-            t.comment,
-            t.review,
-            t.sentiment,
-            t.status,
-            t.approved ? 1 : 0
-          );
-        }
-      }
+    await sql`
+      CREATE TABLE IF NOT EXISTS testimonials (
+        id VARCHAR(50) PRIMARY KEY,
+        patientName VARCHAR(100),
+        name VARCHAR(100),
+        treatment VARCHAR(150),
+        rating INTEGER,
+        date VARCHAR(50),
+        comment TEXT,
+        review TEXT,
+        sentiment VARCHAR(50),
+        status VARCHAR(50),
+        approved BOOLEAN DEFAULT FALSE
+      );
+    `;
 
-      // Seed CMS data
-      const cmsCount = (sqliteDb.prepare('SELECT COUNT(*) as count FROM cms').get() as any).count;
-      if (cmsCount === 0) {
-        const stmt = sqliteDb.prepare(`
-          INSERT INTO cms (section, data)
-          VALUES (?, ?)
-        `);
-        stmt.run('hero', JSON.stringify(INITIAL_DATA.cms.hero));
-        stmt.run('about', JSON.stringify(INITIAL_DATA.cms.about));
-        stmt.run('packages', JSON.stringify(INITIAL_DATA.cms.packages));
-        stmt.run('emergencyNumbers', JSON.stringify(INITIAL_DATA.cms.emergencyNumbers));
-      }
+    await sql`
+      CREATE TABLE IF NOT EXISTS cms (
+        section VARCHAR(50) PRIMARY KEY,
+        data JSONB NOT NULL
+      );
+    `;
 
-      // Seed departments
-      const deptsCount = (sqliteDb.prepare('SELECT COUNT(*) as count FROM departments').get() as any).count;
-      if (deptsCount === 0) {
-        const stmt = sqliteDb.prepare(`
-          INSERT INTO departments (id, name, head, category, doctorsCount, patientsCount, opdLimit, active, description)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        `);
-        for (const d of INITIAL_DATA.departments) {
-          stmt.run(d.id, d.name, d.head, d.category, d.doctorsCount, d.patientsCount, d.opdLimit, d.active ? 1 : 0, d.description);
-        }
-      }
-    })();
+    await sql`
+      CREATE TABLE IF NOT EXISTS departments (
+        id VARCHAR(50) PRIMARY KEY,
+        name VARCHAR(150) NOT NULL,
+        head VARCHAR(100),
+        category VARCHAR(100),
+        doctorsCount INTEGER,
+        patientsCount INTEGER,
+        opdLimit INTEGER,
+        active BOOLEAN DEFAULT TRUE,
+        description TEXT
+      );
+    `;
+
+    // 2. Run seeders if tables are empty
+    await this.seed();
   }
 
-  public get<K extends keyof DatabaseSchema>(table: K): DatabaseSchema[K] {
+  private async seed() {
+    // Seed patients
+    const patientCountRes = await sql`SELECT COUNT(*) as count FROM patients`;
+    const patientsCount = parseInt(patientCountRes[0].count, 10);
+    if (patientsCount === 0) {
+      for (const p of INITIAL_DATA.patients) {
+        await sql`
+          INSERT INTO patients (id, name, age, gender, phone, bloodGroup, status, ward, admissionDate, history, reports, prescriptions)
+          VALUES (${p.id}, ${p.name}, ${p.age}, ${p.gender}, ${p.phone}, ${p.bloodGroup}, ${p.status}, ${p.ward}, ${p.admissionDate}, ${JSON.stringify(p.history)}, ${JSON.stringify(p.reports)}, ${JSON.stringify(p.prescriptions)})
+        `;
+      }
+    }
+
+    // Seed doctors
+    const doctorCountRes = await sql`SELECT COUNT(*) as count FROM doctors`;
+    const doctorsCount = parseInt(doctorCountRes[0].count, 10);
+    if (doctorsCount === 0) {
+      for (const d of INITIAL_DATA.doctors) {
+        await sql`
+          INSERT INTO doctors (id, name, specialty, dept, availability, schedule, leaves)
+          VALUES (${d.id}, ${d.name}, ${d.specialty}, ${d.dept}, ${d.availability}, ${d.schedule}, ${JSON.stringify(d.leaves)})
+        `;
+      }
+    }
+
+    // Seed appointments
+    const apptCountRes = await sql`SELECT COUNT(*) as count FROM appointments`;
+    const apptsCount = parseInt(apptCountRes[0].count, 10);
+    if (apptsCount === 0) {
+      for (const a of INITIAL_DATA.appointments) {
+        await sql`
+          INSERT INTO appointments (id, patientName, doctorName, date, time, dept, status, priority)
+          VALUES (${a.id}, ${a.patientName}, ${a.doctorName}, ${a.date}, ${a.time}, ${a.dept}, ${a.status}, ${a.priority})
+        `;
+      }
+    }
+
+    // Seed leads
+    const leadCountRes = await sql`SELECT COUNT(*) as count FROM leads`;
+    const leadsCount = parseInt(leadCountRes[0].count, 10);
+    if (leadsCount === 0) {
+      for (const l of INITIAL_DATA.leads) {
+        await sql`
+          INSERT INTO leads (id, name, phone, type, message, date, status)
+          VALUES (${l.id}, ${l.name}, ${l.phone}, ${l.type}, ${l.message}, ${l.date}, ${l.status})
+        `;
+      }
+    }
+
+    // Seed notifications
+    const notifCountRes = await sql`SELECT COUNT(*) as count FROM notifications`;
+    const notificationsCount = parseInt(notifCountRes[0].count, 10);
+    if (notificationsCount === 0) {
+      for (const n of INITIAL_DATA.notifications) {
+        await sql`
+          INSERT INTO notifications (id, title, message, time, type, read)
+          VALUES (${n.id}, ${n.title}, ${n.message}, ${n.time}, ${n.type}, ${n.read})
+        `;
+      }
+    }
+
+    // Seed blogs
+    const blogCountRes = await sql`SELECT COUNT(*) as count FROM blogs`;
+    const blogsCount = parseInt(blogCountRes[0].count, 10);
+    if (blogsCount === 0) {
+      for (const b of INITIAL_DATA.blogs) {
+        await sql`
+          INSERT INTO blogs (id, title, author, category, status, publishedDate, readTime, content, tags)
+          VALUES (${b.id}, ${b.title}, ${b.author}, ${b.category}, ${b.status}, ${b.publishedDate}, ${b.readTime}, ${b.content}, ${JSON.stringify(b.tags)})
+        `;
+      }
+    }
+
+    // Seed testimonials
+    const testCountRes = await sql`SELECT COUNT(*) as count FROM testimonials`;
+    const testimonialsCount = parseInt(testCountRes[0].count, 10);
+    if (testimonialsCount === 0) {
+      for (const t of INITIAL_DATA.testimonials) {
+        await sql`
+          INSERT INTO testimonials (id, patientName, name, treatment, rating, date, comment, review, sentiment, status, approved)
+          VALUES (${t.id}, ${t.patientName}, ${t.name}, ${t.treatment}, ${t.rating}, ${t.date}, ${t.comment}, ${t.review}, ${t.sentiment}, ${t.status}, ${t.approved})
+        `;
+      }
+    }
+
+    // Seed CMS data
+    const cmsCountRes = await sql`SELECT COUNT(*) as count FROM cms`;
+    const cmsCount = parseInt(cmsCountRes[0].count, 10);
+    if (cmsCount === 0) {
+      await sql`INSERT INTO cms (section, data) VALUES ('hero', ${JSON.stringify(INITIAL_DATA.cms.hero)})`;
+      await sql`INSERT INTO cms (section, data) VALUES ('about', ${JSON.stringify(INITIAL_DATA.cms.about)})`;
+      await sql`INSERT INTO cms (section, data) VALUES ('packages', ${JSON.stringify(INITIAL_DATA.cms.packages)})`;
+      await sql`INSERT INTO cms (section, data) VALUES ('emergencyNumbers', ${JSON.stringify(INITIAL_DATA.cms.emergencyNumbers)})`;
+    }
+
+    // Seed departments
+    const deptCountRes = await sql`SELECT COUNT(*) as count FROM departments`;
+    const deptsCount = parseInt(deptCountRes[0].count, 10);
+    if (deptsCount === 0) {
+      for (const d of INITIAL_DATA.departments) {
+        await sql`
+          INSERT INTO departments (id, name, head, category, doctorsCount, patientsCount, opdLimit, active, description)
+          VALUES (${d.id}, ${d.name}, ${d.head}, ${d.category}, ${d.doctorsCount}, ${d.patientsCount}, ${d.opdLimit}, ${d.active}, ${d.description})
+        `;
+      }
+    }
+  }
+
+  public async get<K extends keyof DatabaseSchema>(table: K): Promise<DatabaseSchema[K]> {
     if (table === 'cms') {
-      const rows = sqliteDb.prepare('SELECT * FROM cms').all() as any[];
+      const rows = await sql`SELECT * FROM cms`;
       const cmsData: any = { hero: {}, about: {}, packages: [], emergencyNumbers: [] };
       rows.forEach((row: any) => {
-        cmsData[row.section] = JSON.parse(row.data);
+        cmsData[row.section] = typeof row.data === 'string' ? JSON.parse(row.data) : row.data;
       });
       return cmsData;
     }
 
-    const rows = sqliteDb.prepare(`SELECT * FROM ${table}`).all() as any[];
-
+    const rows = await (sql as any)(`SELECT * FROM ${table}`);
+    
+    // Explicit type casts for boolean and arrays from JSONB columns for downstream files
     if (table === 'patients') {
       return rows.map((r: any) => ({
         ...r,
-        history: JSON.parse(r.history || '[]'),
-        reports: JSON.parse(r.reports || '[]'),
-        prescriptions: JSON.parse(r.prescriptions || '[]')
+        history: typeof r.history === 'string' ? JSON.parse(r.history || '[]') : (r.history || []),
+        reports: typeof r.reports === 'string' ? JSON.parse(r.reports || '[]') : (r.reports || []),
+        prescriptions: typeof r.prescriptions === 'string' ? JSON.parse(r.prescriptions || '[]') : (r.prescriptions || [])
       })) as any;
     }
 
     if (table === 'doctors') {
       return rows.map((r: any) => ({
         ...r,
-        leaves: JSON.parse(r.leaves || '[]')
+        leaves: typeof r.leaves === 'string' ? JSON.parse(r.leaves || '[]') : (r.leaves || [])
       })) as any;
     }
 
     if (table === 'blogs') {
       return rows.map((r: any) => ({
         ...r,
-        tags: JSON.parse(r.tags || '[]')
+        tags: typeof r.tags === 'string' ? JSON.parse(r.tags || '[]') : (r.tags || [])
       })) as any;
     }
 
@@ -677,291 +666,138 @@ class DatabaseWrapper {
     return rows as any;
   }
 
-  public insert<K extends keyof DatabaseSchema>(table: K, record: any): any {
+  public async insert<K extends keyof DatabaseSchema>(table: K, record: any): Promise<any> {
     const id = record.id || `${table.substring(0, 3).toUpperCase()}-${Date.now()}`;
     const data = { ...record, id };
 
     if (table === 'patients') {
-      sqliteDb.prepare(`
+      await sql`
         INSERT INTO patients (id, name, age, gender, phone, bloodGroup, status, ward, admissionDate, history, reports, prescriptions)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `).run(
-        data.id,
-        data.name,
-        data.age || 30,
-        data.gender || 'Male',
-        data.phone,
-        data.bloodGroup || 'O+',
-        data.status || 'ER Queue',
-        data.ward || 'Emergency Triage',
-        data.admissionDate || new Date().toISOString().split('T')[0],
-        JSON.stringify(data.history || []),
-        JSON.stringify(data.reports || []),
-        JSON.stringify(data.prescriptions || [])
-      );
+        VALUES (${data.id}, ${data.name}, ${data.age || 30}, ${data.gender || 'Male'}, ${data.phone}, ${data.bloodGroup || 'O+'}, ${data.status || 'ER Queue'}, ${data.ward || 'Emergency Triage'}, ${data.admissionDate || new Date().toISOString().split('T')[0]}, ${JSON.stringify(data.history || [])}, ${JSON.stringify(data.reports || [])}, ${JSON.stringify(data.prescriptions || [])})
+      `;
     } else if (table === 'doctors') {
-      sqliteDb.prepare(`
+      await sql`
         INSERT INTO doctors (id, name, specialty, dept, availability, schedule, leaves)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-      `).run(
-        data.id,
-        data.name,
-        data.specialty,
-        data.dept,
-        data.availability || 'Available',
-        data.schedule,
-        JSON.stringify(data.leaves || [])
-      );
+        VALUES (${data.id}, ${data.name}, ${data.specialty}, ${data.dept}, ${data.availability || 'Available'}, ${data.schedule}, ${JSON.stringify(data.leaves || [])})
+      `;
     } else if (table === 'appointments') {
-      sqliteDb.prepare(`
+      await sql`
         INSERT INTO appointments (id, patientName, doctorName, date, time, dept, status, priority)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-      `).run(
-        data.id,
-        data.patientName,
-        data.doctorName || 'Dr. Lal Kumar Kishnani',
-        data.date,
-        data.time,
-        data.dept || 'General Medicine',
-        data.status || 'Pending',
-        data.priority || 'Routine'
-      );
+        VALUES (${data.id}, ${data.patientName}, ${data.doctorName || 'Dr. Lal Kumar Kishnani'}, ${data.date}, ${data.time}, ${data.dept || 'General Medicine'}, ${data.status || 'Pending'}, ${data.priority || 'Routine'})
+      `;
     } else if (table === 'leads') {
-      sqliteDb.prepare(`
+      await sql`
         INSERT INTO leads (id, name, phone, type, message, date, status)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-      `).run(
-        data.id,
-        data.name,
-        data.phone,
-        data.type || 'Contact Form',
-        data.message,
-        data.date || new Date().toISOString().split('T')[0],
-        data.status || 'Unread'
-      );
+        VALUES (${data.id}, ${data.name}, ${data.phone}, ${data.type || 'Contact Form'}, ${data.message}, ${data.date || new Date().toISOString().split('T')[0]}, ${data.status || 'Unread'})
+      `;
     } else if (table === 'notifications') {
-      sqliteDb.prepare(`
+      await sql`
         INSERT INTO notifications (id, title, message, time, type, read)
-        VALUES (?, ?, ?, ?, ?, ?)
-      `).run(
-        data.id,
-        data.title,
-        data.message,
-        data.time || 'Just now',
-        data.type || 'info',
-        data.read ? 1 : 0
-      );
+        VALUES (${data.id}, ${data.title}, ${data.message}, ${data.time || 'Just now'}, ${data.type || 'info'}, ${data.read || false})
+      `;
     } else if (table === 'blogs') {
-      sqliteDb.prepare(`
+      await sql`
         INSERT INTO blogs (id, title, author, category, status, publishedDate, readTime, content, tags)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `).run(
-        data.id,
-        data.title,
-        data.author,
-        data.category || 'Wellness Tips',
-        data.status || 'Draft',
-        data.publishedDate || new Date().toISOString().split('T')[0],
-        data.readTime || '5 mins read',
-        data.content,
-        JSON.stringify(data.tags || [])
-      );
+        VALUES (${data.id}, ${data.title}, ${data.author}, ${data.category || 'Wellness Tips'}, ${data.status || 'Draft'}, ${data.publishedDate || new Date().toISOString().split('T')[0]}, ${data.readTime || '5 mins read'}, ${data.content}, ${JSON.stringify(data.tags || [])})
+      `;
     } else if (table === 'testimonials') {
-      sqliteDb.prepare(`
+      await sql`
         INSERT INTO testimonials (id, patientName, name, treatment, rating, date, comment, review, sentiment, status, approved)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `).run(
-        data.id,
-        data.patientName || data.name,
-        data.name || data.patientName,
-        data.treatment || 'General Consultation',
-        data.rating || 5,
-        data.date || new Date().toISOString().split('T')[0],
-        data.comment || data.review,
-        data.review || data.comment,
-        data.sentiment || 'Positive',
-        data.status || (data.approved ? 'Approved' : 'Pending'),
-        data.approved ? 1 : 0
-      );
+        VALUES (${data.id}, ${data.patientName || data.name}, ${data.name || data.patientName}, ${data.treatment || 'General Consultation'}, ${data.rating || 5}, ${data.date || new Date().toISOString().split('T')[0]}, ${data.comment || data.review}, ${data.review || data.comment}, ${data.sentiment || 'Positive'}, ${data.status || (data.approved ? 'Approved' : 'Pending')}, ${data.approved || false})
+      `;
     } else if (table === 'departments') {
-      sqliteDb.prepare(`
+      await sql`
         INSERT INTO departments (id, name, head, category, doctorsCount, patientsCount, opdLimit, active, description)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `).run(
-        data.id,
-        data.name,
-        data.head,
-        data.category || 'Clinical',
-        data.doctorsCount || 0,
-        data.patientsCount || 0,
-        data.opdLimit || 50,
-        data.active ? 1 : 0,
-        data.description
-      );
+        VALUES (${data.id}, ${data.name}, ${data.head}, ${data.category || 'Clinical'}, ${data.doctorsCount || 0}, ${data.patientsCount || 0}, ${data.opdLimit || 50}, ${data.active || false}, ${data.description})
+      `;
     }
 
     return data;
   }
 
-  public update<K extends keyof DatabaseSchema>(table: K, id: string, updates: any): any {
-    const row = sqliteDb.prepare(`SELECT * FROM ${table} WHERE id = ?`).get(id) as any;
+  public async update<K extends keyof DatabaseSchema>(table: K, id: string, updates: any): Promise<any> {
+    const rows = await (sql as any)(`SELECT * FROM ${table} WHERE id = $1`, [id]);
+    const row = rows[0];
     if (!row) return null;
 
     const merged = { ...row, ...updates };
 
     if (table === 'patients') {
-      const history = typeof updates.history !== 'undefined' ? updates.history : JSON.parse(row.history || '[]');
-      const reports = typeof updates.reports !== 'undefined' ? updates.reports : JSON.parse(row.reports || '[]');
-      const prescriptions = typeof updates.prescriptions !== 'undefined' ? updates.prescriptions : JSON.parse(row.prescriptions || '[]');
+      const history = typeof updates.history !== 'undefined' ? updates.history : (typeof row.history === 'string' ? JSON.parse(row.history || '[]') : row.history);
+      const reports = typeof updates.reports !== 'undefined' ? updates.reports : (typeof row.reports === 'string' ? JSON.parse(row.reports || '[]') : row.reports);
+      const prescriptions = typeof updates.prescriptions !== 'undefined' ? updates.prescriptions : (typeof row.prescriptions === 'string' ? JSON.parse(row.prescriptions || '[]') : row.prescriptions);
 
-      sqliteDb.prepare(`
+      await sql`
         UPDATE patients
-        SET name = ?, age = ?, gender = ?, phone = ?, bloodGroup = ?, status = ?, ward = ?, admissionDate = ?, history = ?, reports = ?, prescriptions = ?
-        WHERE id = ?
-      `).run(
-        merged.name,
-        merged.age,
-        merged.gender,
-        merged.phone,
-        merged.bloodGroup,
-        merged.status,
-        merged.ward,
-        merged.admissionDate,
-        JSON.stringify(history),
-        JSON.stringify(reports),
-        JSON.stringify(prescriptions),
-        id
-      );
+        SET name = ${merged.name}, age = ${merged.age}, gender = ${merged.gender}, phone = ${merged.phone}, bloodGroup = ${merged.bloodGroup}, status = ${merged.status}, ward = ${merged.ward}, admissionDate = ${merged.admissionDate}, history = ${JSON.stringify(history)}, reports = ${JSON.stringify(reports)}, prescriptions = ${JSON.stringify(prescriptions)}
+        WHERE id = ${id}
+      `;
       return { ...merged, history, reports, prescriptions };
     } else if (table === 'doctors') {
-      const leaves = typeof updates.leaves !== 'undefined' ? updates.leaves : JSON.parse(row.leaves || '[]');
-      sqliteDb.prepare(`
+      const leaves = typeof updates.leaves !== 'undefined' ? updates.leaves : (typeof row.leaves === 'string' ? JSON.parse(row.leaves || '[]') : row.leaves);
+      await sql`
         UPDATE doctors
-        SET name = ?, specialty = ?, dept = ?, availability = ?, schedule = ?, leaves = ?
-        WHERE id = ?
-      `).run(
-        merged.name,
-        merged.specialty,
-        merged.dept,
-        merged.availability,
-        merged.schedule,
-        JSON.stringify(leaves),
-        id
-      );
+        SET name = ${merged.name}, specialty = ${merged.specialty}, dept = ${merged.dept}, availability = ${merged.availability}, schedule = ${merged.schedule}, leaves = ${JSON.stringify(leaves)}
+        WHERE id = ${id}
+      `;
       return { ...merged, leaves };
     } else if (table === 'appointments') {
-      sqliteDb.prepare(`
+      await sql`
         UPDATE appointments
-        SET patientName = ?, doctorName = ?, date = ?, time = ?, dept = ?, status = ?, priority = ?
-        WHERE id = ?
-      `).run(
-        merged.patientName,
-        merged.doctorName,
-        merged.date,
-        merged.time,
-        merged.dept,
-        merged.status,
-        merged.priority,
-        id
-      );
+        SET patientName = ${merged.patientName}, doctorName = ${merged.doctorName}, date = ${merged.date}, time = ${merged.time}, dept = ${merged.dept}, status = ${merged.status}, priority = ${merged.priority}
+        WHERE id = ${id}
+      `;
       return merged;
     } else if (table === 'leads') {
-      sqliteDb.prepare(`
+      await sql`
         UPDATE leads
-        SET name = ?, phone = ?, type = ?, message = ?, date = ?, status = ?
-        WHERE id = ?
-      `).run(
-        merged.name,
-        merged.phone,
-        merged.type,
-        merged.message,
-        merged.date,
-        merged.status,
-        id
-      );
+        SET name = ${merged.name}, phone = ${merged.phone}, type = ${merged.type}, message = ${merged.message}, date = ${merged.date}, status = ${merged.status}
+        WHERE id = ${id}
+      `;
       return merged;
     } else if (table === 'notifications') {
-      sqliteDb.prepare(`
+      await sql`
         UPDATE notifications
-        SET title = ?, message = ?, time = ?, type = ?, read = ?
-        WHERE id = ?
-      `).run(
-        merged.title,
-        merged.message,
-        merged.time,
-        merged.type,
-        merged.read ? 1 : 0,
-        id
-      );
-      return { ...merged, read: Boolean(merged.read) };
+        SET title = ${merged.title}, message = ${merged.message}, time = ${merged.time}, type = ${merged.type}, read = ${merged.read || false}
+        WHERE id = ${id}
+      `;
+      return merged;
     } else if (table === 'blogs') {
-      const tags = typeof updates.tags !== 'undefined' ? updates.tags : JSON.parse(row.tags || '[]');
-      sqliteDb.prepare(`
+      const tags = typeof updates.tags !== 'undefined' ? updates.tags : (typeof row.tags === 'string' ? JSON.parse(row.tags || '[]') : row.tags);
+      await sql`
         UPDATE blogs
-        SET title = ?, author = ?, category = ?, status = ?, publishedDate = ?, readTime = ?, content = ?, tags = ?
-        WHERE id = ?
-      `).run(
-        merged.title,
-        merged.author,
-        merged.category,
-        merged.status,
-        merged.publishedDate,
-        merged.readTime,
-        merged.content,
-        JSON.stringify(tags),
-        id
-      );
+        SET title = ${merged.title}, author = ${merged.author}, category = ${merged.category}, status = ${merged.status}, publishedDate = ${merged.publishedDate}, readTime = ${merged.readTime}, content = ${merged.content}, tags = ${JSON.stringify(tags)}
+        WHERE id = ${id}
+      `;
       return { ...merged, tags };
     } else if (table === 'testimonials') {
-      const approvedVal = typeof updates.approved !== 'undefined' ? (updates.approved ? 1 : 0) : row.approved;
+      const approvedVal = typeof updates.approved !== 'undefined' ? updates.approved : row.approved;
       const statusVal = typeof updates.status !== 'undefined' ? updates.status : row.status;
-      sqliteDb.prepare(`
+      await sql`
         UPDATE testimonials
-        SET patientName = ?, name = ?, treatment = ?, rating = ?, date = ?, comment = ?, review = ?, sentiment = ?, status = ?, approved = ?
-        WHERE id = ?
-      `).run(
-        merged.patientName || merged.name,
-        merged.name || merged.patientName,
-        merged.treatment,
-        merged.rating,
-        merged.date,
-        merged.comment || merged.review,
-        merged.review || merged.comment,
-        merged.sentiment,
-        statusVal,
-        approvedVal,
-        id
-      );
-      return { ...merged, approved: Boolean(approvedVal) };
+        SET patientName = ${merged.patientName || merged.name}, name = ${merged.name || merged.patientName}, treatment = ${merged.treatment}, rating = ${merged.rating}, date = ${merged.date}, comment = ${merged.comment || merged.review}, review = ${merged.review || merged.comment}, sentiment = ${merged.sentiment}, status = ${statusVal}, approved = ${approvedVal}
+        WHERE id = ${id}
+      `;
+      return { ...merged, approved: approvedVal };
     } else if (table === 'departments') {
-      const activeVal = typeof updates.active !== 'undefined' ? (updates.active ? 1 : 0) : row.active;
-      sqliteDb.prepare(`
+      const activeVal = typeof updates.active !== 'undefined' ? updates.active : row.active;
+      await sql`
         UPDATE departments
-        SET name = ?, head = ?, category = ?, doctorsCount = ?, patientsCount = ?, opdLimit = ?, active = ?, description = ?
-        WHERE id = ?
-      `).run(
-        merged.name,
-        merged.head,
-        merged.category,
-        merged.doctorsCount,
-        merged.patientsCount,
-        merged.opdLimit,
-        activeVal,
-        merged.description,
-        id
-      );
-      return { ...merged, active: Boolean(activeVal) };
+        SET name = ${merged.name}, head = ${merged.head}, category = ${merged.category}, doctorsCount = ${merged.doctorsCount}, patientsCount = ${merged.patientsCount}, opdLimit = ${merged.opdLimit}, active = ${activeVal}, description = ${merged.description}
+        WHERE id = ${id}
+      `;
+      return { ...merged, active: activeVal };
     }
 
     return null;
   }
 
-  public delete<K extends keyof DatabaseSchema>(table: K, id: string): boolean {
-    const result = sqliteDb.prepare(`DELETE FROM ${table} WHERE id = ?`).run(id);
-    return result.changes > 0;
+  public async delete<K extends keyof DatabaseSchema>(table: K, id: string): Promise<boolean> {
+    await (sql as any)(`DELETE FROM ${table} WHERE id = $1`, [id]);
+    return true;
   }
 
-  public updateCMS(sectionOrUpdates: string | Partial<CMSData>, optionalUpdates?: any): CMSData {
+  public async updateCMS(sectionOrUpdates: string | Partial<CMSData>, optionalUpdates?: any): Promise<CMSData> {
     let updates: Partial<CMSData> = {};
     if (typeof sectionOrUpdates === 'string') {
       const section = sectionOrUpdates;
@@ -974,7 +810,7 @@ class DatabaseWrapper {
       updates = sectionOrUpdates;
     }
 
-    const current = this.get('cms') as CMSData;
+    const current = await this.get('cms') as CMSData;
     const merged = { ...current };
 
     if (updates.hero) merged.hero = { ...merged.hero, ...updates.hero };
@@ -982,18 +818,18 @@ class DatabaseWrapper {
     if (updates.packages) merged.packages = updates.packages;
     if (updates.emergencyNumbers) merged.emergencyNumbers = updates.emergencyNumbers;
 
-    const saveStmt = sqliteDb.prepare(`
-      INSERT INTO cms (section, data)
-      VALUES (?, ?)
-      ON CONFLICT(section) DO UPDATE SET data = excluded.data
-    `);
+    const saveStmt = async (section: string, data: any) => {
+      await sql`
+        INSERT INTO cms (section, data)
+        VALUES (${section}, ${JSON.stringify(data)})
+        ON CONFLICT(section) DO UPDATE SET data = EXCLUDED.data
+      `;
+    };
 
-    sqliteDb.transaction(() => {
-      saveStmt.run('hero', JSON.stringify(merged.hero));
-      saveStmt.run('about', JSON.stringify(merged.about));
-      saveStmt.run('packages', JSON.stringify(merged.packages));
-      saveStmt.run('emergencyNumbers', JSON.stringify(merged.emergencyNumbers));
-    })();
+    await saveStmt('hero', merged.hero);
+    await saveStmt('about', merged.about);
+    await saveStmt('packages', merged.packages);
+    await saveStmt('emergencyNumbers', merged.emergencyNumbers);
 
     return merged;
   }

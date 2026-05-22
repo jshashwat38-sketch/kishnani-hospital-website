@@ -15,7 +15,7 @@ export async function OPTIONS() {
 
 export async function GET() {
   try {
-    const departments = db.get('departments');
+    const departments = await db.get('departments');
     const response = NextResponse.json(departments);
     return addCorsHeaders(response);
   } catch (error: any) {
@@ -26,7 +26,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const newDept = db.insert('departments', body);
+    const newDept = await db.insert('departments', body);
     const response = NextResponse.json({ success: true, department: newDept });
     return addCorsHeaders(response);
   } catch (error: any) {
@@ -40,7 +40,7 @@ export async function PUT(request: Request) {
     if (!body.id) {
       return addCorsHeaders(NextResponse.json({ error: 'Missing ID' }, { status: 400 }));
     }
-    const updated = db.update('departments', body.id, body);
+    const updated = await db.update('departments', body.id, body);
     const response = NextResponse.json({ success: true, department: updated });
     return addCorsHeaders(response);
   } catch (error: any) {

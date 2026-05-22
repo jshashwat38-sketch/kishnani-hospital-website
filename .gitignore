@@ -15,3 +15,7 @@ Thumbs.db
 .gemini/
 brain/
 scratch/
+
+.vercel
+.env*
+*.db

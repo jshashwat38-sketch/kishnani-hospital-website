@@ -15,7 +15,7 @@ export async function OPTIONS() {
 
 export async function GET() {
   try {
-    const testimonials = db.get('testimonials');
+    const testimonials = await db.get('testimonials');
     const response = NextResponse.json(testimonials);
     return addCorsHeaders(response);
   } catch (error: any) {
@@ -26,7 +26,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const newTestimonial = db.insert('testimonials', {
+    const newTestimonial = await db.insert('testimonials', {
       name: body.name,
       treatment: body.treatment || 'General Consultation',
       rating: body.rating || 5,
@@ -47,7 +47,7 @@ export async function PUT(request: Request) {
     if (!body.id) {
       return addCorsHeaders(NextResponse.json({ error: 'Missing ID' }, { status: 400 }));
     }
-    const updated = db.update('testimonials', body.id, body);
+    const updated = await db.update('testimonials', body.id, body);
     const response = NextResponse.json({ success: true, testimonial: updated });
     return addCorsHeaders(response);
   } catch (error: any) {

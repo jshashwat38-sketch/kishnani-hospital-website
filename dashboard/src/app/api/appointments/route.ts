@@ -15,7 +15,7 @@ export async function OPTIONS() {
 
 export async function GET() {
   try {
-    const appointments = db.get('appointments');
+    const appointments = await db.get('appointments');
     const response = NextResponse.json(appointments);
     return addCorsHeaders(response);
   } catch (error: any) {
@@ -40,7 +40,7 @@ export async function POST(request: Request) {
       return addCorsHeaders(NextResponse.json({ error: 'Missing required parameters (patientName, date, time)' }, { status: 400 }));
     }
     
-    const newAppointment = db.insert('appointments', {
+    const newAppointment = await db.insert('appointments', {
       patientName,
       doctorName: doctorName || 'Dr. Lal Kumar Kishnani',
       date,
@@ -64,7 +64,7 @@ export async function PUT(request: Request) {
       return addCorsHeaders(NextResponse.json({ error: 'Missing ID' }, { status: 400 }));
     }
     
-    const updated = db.update('appointments', body.id, body);
+    const updated = await db.update('appointments', body.id, body);
     if (!updated) {
       return addCorsHeaders(NextResponse.json({ error: 'Appointment not found' }, { status: 404 }));
     }

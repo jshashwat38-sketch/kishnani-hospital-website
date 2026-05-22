@@ -15,7 +15,7 @@ export async function OPTIONS() {
 
 export async function GET() {
   try {
-    const patients = db.get('patients');
+    const patients = await db.get('patients');
     const response = NextResponse.json(patients);
     return addCorsHeaders(response);
   } catch (error: any) {
@@ -31,7 +31,7 @@ export async function POST(request: Request) {
       return addCorsHeaders(NextResponse.json({ error: 'Missing required parameters (name, phone)' }, { status: 400 }));
     }
     
-    const newPatient = db.insert('patients', {
+    const newPatient = await db.insert('patients', {
       name: body.name,
       age: body.age || 30,
       gender: body.gender || 'Male',
@@ -59,7 +59,7 @@ export async function PUT(request: Request) {
       return addCorsHeaders(NextResponse.json({ error: 'Missing ID' }, { status: 400 }));
     }
     
-    const updated = db.update('patients', body.id, body);
+    const updated = await db.update('patients', body.id, body);
     if (!updated) {
       return addCorsHeaders(NextResponse.json({ error: 'Patient not found' }, { status: 404 }));
     }

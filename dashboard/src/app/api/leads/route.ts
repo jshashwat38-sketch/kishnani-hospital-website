@@ -15,7 +15,7 @@ export async function OPTIONS() {
 
 export async function GET() {
   try {
-    const leads = db.get('leads');
+    const leads = await db.get('leads');
     const response = NextResponse.json(leads);
     return addCorsHeaders(response);
   } catch (error: any) {
@@ -31,7 +31,7 @@ export async function POST(request: Request) {
       return addCorsHeaders(NextResponse.json({ error: 'Missing required parameters' }, { status: 400 }));
     }
     
-    const newLead = db.insert('leads', {
+    const newLead = await db.insert('leads', {
       name: body.name,
       phone: body.phone,
       email: body.email || '',
@@ -54,7 +54,7 @@ export async function PUT(request: Request) {
       return addCorsHeaders(NextResponse.json({ error: 'Missing ID' }, { status: 400 }));
     }
     
-    const updated = db.update('leads', body.id, body);
+    const updated = await db.update('leads', body.id, body);
     if (!updated) {
       return addCorsHeaders(NextResponse.json({ error: 'Lead not found' }, { status: 404 }));
     }

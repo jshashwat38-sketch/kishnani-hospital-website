@@ -15,7 +15,7 @@ export async function OPTIONS() {
 
 export async function GET() {
   try {
-    const cms = db.get('cms');
+    const cms = await db.get('cms');
     const response = NextResponse.json(cms);
     return addCorsHeaders(response);
   } catch (error: any) {
@@ -32,7 +32,7 @@ export async function POST(request: Request) {
       return addCorsHeaders(NextResponse.json({ error: 'Missing section or data' }, { status: 400 }));
     }
     
-    const updatedCMS = db.updateCMS(section, data);
+    const updatedCMS = await db.updateCMS(section, data);
     const response = NextResponse.json({ success: true, cms: updatedCMS });
     return addCorsHeaders(response);
   } catch (error: any) {
