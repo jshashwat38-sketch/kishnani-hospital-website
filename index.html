@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kishnani Hospital | Advanced Healthcare with Compassion in Bhopal</title>
+    
+    <!-- SEO Optimization Meta Tags -->
+    <meta name="description" content="Kishnani Hospital in Bairagarh, Bhopal offers advanced healthcare with modern diagnostic facilities, modular ICU, operation theatres, and 24x7 emergency medical services.">
+    <meta name="keywords" content="Kishnani Hospital Bairagarh, Hospital in Bhopal, Best multi-specialty hospital Bhopal, 24x7 emergency hospital Bhopal, Gynecology Bhopal, ICU Bairagarh">
+    <meta property="og:title" content="Kishnani Hospital | Best Multi-Specialty Hospital in Bhopal">
+    <meta property="og:description" content="Premium healthcare with advanced infrastructure, experienced senior doctors, and 24x7 ICU, diagnostics and pathology lab services in Bairagarh, Bhopal.">
+    <meta property="og:image" content="images/hero_banner.png">
+    <meta property="og:type" content="website">
+    
+    <!-- Favicon Icon (Lucide Cross icon representation) -->
+    <link rel="icon" type="image/png" href="images/favicon.png" onerror="this.href='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%2300A896%22><path d=%22M19 10.5h-5.5V5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v5.5H5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5h5.5V19c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-5.5H19c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5z%22/></svg>'">
+    
+    <!-- FontAwesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS Design System stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+    <!-- 1. PRELOADER HEARTBEAT SCREEN -->
+    <div class="preloader" id="preloader">
+        <div class="heartbeat-loader">
+            <div class="loader-circle"></div>
+            <i class="fa-solid fa-heart-pulse heart-icon"></i>
+        </div>
+        <span class="preloader-text">Kishnani Hospital</span>
+    </div>
+
+    <!-- 2. STICKY GLASSMORPHISM HEADER -->
+    <header class="header-wrapper" id="header">
+        <div class="container">
+            <nav class="navbar" aria-label="Main Navigation">
+                <a href="index.html" class="logo-container" id="nav-logo">
+                    <div class="logo-icon-wrapper">
+                        <i class="fa-solid fa-house-chimney-medical"></i>
+                    </div>
+                    <div class="logo-text">
+                        <span class="logo-title">KISHNANI</span>
+                        <span class="logo-subtitle">HOSPITAL</span>
+                    </div>
+                </a>
+                
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item"><a href="index.html" class="nav-link active">Home</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+                    <li class="nav-item dropdown">
+                        <a href="departments.html" class="nav-link dropdown-trigger">Departments <i class="fa-solid fa-chevron-down dropdown-icon"></i></a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item"><a href="departments.html?dept=General Medicine">General Medicine</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Gynecology">Gynecology</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Pediatrics">Pediatrics</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Orthopedics">Orthopedics</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Surgery">Surgery</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Cardiology">Cardiology</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a href="doctors.html" class="nav-link">Doctors</a></li>
+                    <li class="nav-item"><a href="facilities.html" class="nav-link">Facilities</a></li>
+                    <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+                
+                <div class="nav-cta">
+                    <a href="appointment.html" class="btn-nav-appointment" id="btn-quick-appointment">Book Appointment</a>
+                </div>
+                
+                <div class="mobile-nav-toggle" id="mobile-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 3. HERO HERO SECTION WITH STATS OVERLAY -->
+    <section class="hero-section" id="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <span class="hero-tagline">Excellence in Clinical Care</span>
+                    <h1 class="hero-title">Advanced Healthcare <span>with Compassion</span></h1>
+                    <p class="hero-desc">Trusted multi-specialty healthcare in Bairagarh, Bhopal. Combining cutting-edge medical diagnostics, expert senior surgeons, and standard critical care open 24x7.</p>
+                    <div class="hero-buttons">
+                        <a href="appointment.html" class="btn btn-primary">Book Appointment <i class="fa-solid fa-calendar-check"></i></a>
+                        <a href="tel:+917552642960" class="btn btn-emergency">Emergency: +91 755 264 2960</a>
+                    </div>
+                </div>
+                
+                <!-- Quick Info floating badge -->
+                <div class="hero-badge-container">
+                    <h3 class="hero-badge-title"><i class="fa-solid fa-clock"></i> Emergency Services</h3>
+                    <div class="hero-info-item">
+                        <i class="fa-solid fa-door-open"></i>
+                        <span>Open 24 Hours, 7 Days a Week</span>
+                    </div>
+                    <div class="hero-info-item">
+                        <i class="fa-solid fa-map-pin"></i>
+                        <span>Sant Hirdaram Kutiya Ke Samne, Bhopal</span>
+                    </div>
+                    <div class="hero-info-item">
+                        <i class="fa-solid fa-truck-medical"></i>
+                        <span>Ambulance Available Instantly</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. HERO STATISTICS COUNTERS OVERLAY -->
+    <div class="hero-stats-wrapper">
+        <div class="container">
+            <div class="hero-stats-card">
+                <div class="counter-box">
+                    <div class="counter-number"><span class="counter-value" data-target="25">0</span>+</div>
+                    <div class="counter-title">Years of Trust</div>
+                </div>
+                <div class="counter-box">
+                    <div class="counter-number"><span class="counter-value" data-target="40">0</span>+</div>
+                    <div class="counter-title">Senior Staff</div>
+                </div>
+                <div class="counter-box">
+                    <div class="counter-number"><span class="counter-value" data-target="12">0</span>+</div>
+                    <div class="counter-title">Specialities</div>
+                </div>
+                <div class="counter-box">
+                    <div class="counter-number"><span class="counter-value" data-target="50000">0</span>+</div>
+                    <div class="counter-title">Patients Cured</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. ABOUT HOSPITAL SUMMARY SECTION -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-story scroll-reveal">
+                    <span class="section-tag">Since 2001</span>
+                    <h2 class="section-title">Serving Generations <span>With Dedication</span></h2>
+                    <h3>Our Commitment to Bhopal & Bairagarh</h3>
+                    <p>Founded on the principles of trust, accessibility, and stellar clinical ethics, Kishnani Hospital has stood as a beacon of healing for over two decades. Conveniently located opposite Sant Hirdaram Ki Kutiya, Bairagarh, we offer quick access to primary diagnostics, complex pediatric treatments, surgical wards, and customized family health packages.</p>
+                    
+                    <div class="about-features">
+                        <div class="about-feat-item">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>State-of-the-art ICU & Wards</span>
+                        </div>
+                        <div class="about-feat-item">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>Advanced Modular OT Setups</span>
+                        </div>
+                        <div class="about-feat-item">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>In-house Diagnostic Pathology</span>
+                        </div>
+                        <div class="about-feat-item">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>Comprehensive Gynecology Care</span>
+                        </div>
+                    </div>
+                    
+                    <a href="about.html" class="btn btn-secondary">Read Our Story <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="about-image-stack scroll-reveal">
+                    <div class="about-img-large">
+                        <img src="images/hospital_reception.png" alt="Kishnani Hospital Lobby Reception Desk">
+                    </div>
+                    <div class="about-img-small">
+                        <img src="images/doctors_team.png" alt="Senior Medical Staff Indian Doctors at Kishnani Hospital">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. FEATURED SPECIALITIES SECTION -->
+    <section class="section-bg-alt" id="specialities">
+        <div class="container">
+            <div class="section-title-wrapper scroll-reveal">
+                <span class="section-tag">Clinical Departments</span>
+                <h2 class="section-title">Specialized <span>Medical Care</span></h2>
+                <p class="section-desc">Get access to premium specialty checkups and therapies led by seasoned practitioners utilizing high-fidelity clinical technologies.</p>
+            </div>
+            
+            <div class="specialities-slider-wrapper scroll-reveal">
+                <div class="specialities-slider-container">
+                    <div class="specialities-track">
+                        <!-- 1. General Medicine -->
+                        <div class="speciality-slide">
+                            <div class="speciality-card">
+                                <div class="icon-box icon-box-secondary"><i class="fa-solid fa-stethoscope"></i></div>
+                                <h3 class="speciality-name">General Medicine</h3>
+                                <p class="speciality-desc">Comprehensive adult disease diagnosis, prevention, and lifestyle management clinics.</p>
+                                <a href="departments.html?dept=General Medicine#medicine" class="speciality-link">Learn More <i class="fa-solid fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+                        
+                        <!-- 2. Gynecology & Obstetrics -->
+                        <div class="speciality-slide">
+                            <div class="speciality-card">
+                                <div class="icon-box icon-box-secondary"><i class="fa-solid fa-baby"></i></div>
+                                <h3 class="speciality-name">Gynecology & Obstetrics</h3>
+                                <p class="speciality-desc">Advanced maternal healthcare, painless deliveries, neonatal support, and family medicine.</p>
+                                <a href="departments.html?dept=Gynecology#gynecology" class="speciality-link">Learn More <i class="fa-solid fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+                        
+                        <!-- 3. Pediatrics -->
+                        <div class="speciality-slide">
+                            <div class="speciality-card">
+                                <div class="icon-box icon-box-secondary"><i class="fa-solid fa-children"></i></div>
+                                <h3 class="speciality-name">Pediatrics</h3>
+                                <p class="speciality-desc">Dedicated infant health tracking, child immunizations, and critical pediatric treatments.</p>
+                                <a href="departments.html?dept=Pediatrics#pediatrics" class="speciality-link">Learn More <i class="fa-solid fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+                        
+                        <!-- 4. Orthopedics & Joint Care -->
+                        <div class="speciality-slide">
+                            <div class="speciality-card">
+                                <div class="icon-box icon-box-secondary"><i class="fa-solid fa-bone"></i></div>
+                                <h3 class="speciality-name">Orthopedics & Joint Care</h3>
+                                <p class="speciality-desc">Bone fracture settings, joint replacement therapies, and dedicated spine trauma care.</p>
+                                <a href="departments.html?dept=Orthopedics#orthopedics" class="speciality-link">Learn More <i class="fa-solid fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+
+                        <!-- 5. General & Laparoscopic Surgery -->
+                        <div class="speciality-slide">
+                            <div class="speciality-card">
+                                <div class="icon-box icon-box-secondary"><i class="fa-solid fa-user-doctor"></i></div>
+                                <h3 class="speciality-name">General & Laparoscopic Surgery</h3>
+                                <p class="speciality-desc">Modular OT surgeries for appendix removal, hernia treatments, and soft tissue excisions.</p>
+                                <a href="departments.html?dept=Surgery#surgery" class="speciality-link">Learn More <i class="fa-solid fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+
+                        <!-- 6. Emergency Care (24x7) -->
+                        <div class="speciality-slide">
+                            <div class="speciality-card">
+                                <div class="icon-box icon-box-secondary"><i class="fa-solid fa-house-medical-emergency"></i></div>
+                                <h3 class="speciality-name">Emergency Care (24x7)</h3>
+                                <p class="speciality-desc">Critical emergency trauma handling heart strokes, clinical seizures, and severe accident recovery.</p>
+                                <a href="departments.html?dept=Emergency#emergency" class="speciality-link">Learn More <i class="fa-solid fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+
+                        <!-- 7. ICU & Critical Care -->
+                        <div class="speciality-slide">
+                            <div class="speciality-card">
+                                <div class="icon-box icon-box-secondary"><i class="fa-solid fa-heart-pulse"></i></div>
+                                <h3 class="speciality-name">ICU & Critical Care</h3>
+                                <p class="speciality-desc">High-tech monitor patient suites, mechanical ventilation units, and round-the-clock emergency support.</p>
+                                <a href="departments.html?dept=ICU#icu" class="speciality-link">Learn More <i class="fa-solid fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+
+                        <!-- 8. Digital Diagnostics -->
+                        <div class="speciality-slide">
+                            <div class="speciality-card">
+                                <div class="icon-box icon-box-secondary"><i class="fa-solid fa-mobile-screen"></i></div>
+                                <h3 class="speciality-name">Digital Diagnostics</h3>
+                                <p class="speciality-desc">State-of-the-art diagnostic imaging including high-resolution ultrasound scans and digital X-rays.</p>
+                                <a href="departments.html?dept=Diagnostics#diagnostics" class="speciality-link">Learn More <i class="fa-solid fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+
+                        <!-- 9. Pathology Lab -->
+                        <div class="speciality-slide">
+                            <div class="speciality-card">
+                                <div class="icon-box icon-box-secondary"><i class="fa-solid fa-microscope"></i></div>
+                                <h3 class="speciality-name">Pathology Lab</h3>
+                                <p class="speciality-desc">Blood sugar processing counts, lipid profiles, CBC, and urine infection panels with fast reports.</p>
+                                <a href="departments.html?dept=Pathology#pathology" class="speciality-link">Learn More <i class="fa-solid fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+
+                        <!-- 10. ENT Care -->
+                        <div class="speciality-slide">
+                            <div class="speciality-card">
+                                <div class="icon-box icon-box-secondary"><i class="fa-solid fa-ear-deaf"></i></div>
+                                <h3 class="speciality-name">ENT Care</h3>
+                                <p class="speciality-desc">Specializing in ear infections, sinus pain, nasal bone alignments, and outpatient procedures.</p>
+                                <a href="departments.html?dept=ENT#ent" class="speciality-link">Learn More <i class="fa-solid fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+
+                        <!-- 11. Cardiology -->
+                        <div class="speciality-slide">
+                            <div class="speciality-card">
+                                <div class="icon-box icon-box-secondary"><i class="fa-solid fa-heart-circle-check"></i></div>
+                                <h3 class="speciality-name">Cardiology</h3>
+                                <p class="speciality-desc">Clinical screenings for chest pain, regular ECG tracking, and vascular hypertension checks.</p>
+                                <a href="departments.html?dept=Cardiology#cardiology" class="speciality-link">Learn More <i class="fa-solid fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+
+                        <!-- 12. Diabetes Care -->
+                        <div class="speciality-slide">
+                            <div class="speciality-card">
+                                <div class="icon-box icon-box-secondary"><i class="fa-solid fa-hand-holding-droplet"></i></div>
+                                <h3 class="speciality-name">Diabetes Care</h3>
+                                <p class="speciality-desc">Glucose profiling counts, insulin dose adjustments, neuropathic care, and preventive guides.</p>
+                                <a href="departments.html?dept=Diabetes Care#diabetes" class="speciality-link">Learn More <i class="fa-solid fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slider Controls -->
+                <div class="specialities-slider-controls">
+                    <button class="slider-btn spec-btn-prev" aria-label="Previous Specialty"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="slider-btn spec-btn-next" aria-label="Next Specialty"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 24px;" class="scroll-reveal">
+                <a href="departments.html" class="btn btn-primary">View All 12 Specialties <i class="fa-solid fa-list-check"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. INFRASTRUCTURE & FACILITIES SLIDER TEASER -->
+    <section id="infrastructure">
+        <div class="container">
+            <div class="section-title-wrapper scroll-reveal">
+                <span class="section-tag">Modern Infrastructure</span>
+                <h2 class="section-title">Pristine <span>Healthcare Facilities</span></h2>
+                <p class="section-desc">Our medical ecosystem is equipped with clinical infrastructure built to handle acute emergency and surgical tasks flawlessly.</p>
+            </div>
+            
+            <div class="facilities-slider-wrapper scroll-reveal">
+                <div class="facilities-slider-container">
+                    <div class="facilities-track">
+                        <!-- Slide 1: ICU & Critical Care -->
+                        <div class="facility-slide">
+                            <div class="facility-card">
+                                <div class="facility-img">
+                                    <img src="images/modern_icu.png" alt="Advanced Intensive Care Unit ICU at Kishnani Hospital">
+                                </div>
+                                <div class="facility-info">
+                                    <h3 class="facility-name">ICU & Critical Care</h3>
+                                    <p class="facility-desc">High-tech patient monitoring suites, mechanical ventilation units, and round-the-clock emergency doctors.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Slide 2: Modular Operation Theatre -->
+                        <div class="facility-slide">
+                            <div class="facility-card">
+                                <div class="facility-img">
+                                    <img src="images/operation_theatre.png" alt="Modern Sterile Operation Theatre at Kishnani Hospital">
+                                </div>
+                                <div class="facility-info">
+                                    <h3 class="facility-name">Modular Operation Theatre</h3>
+                                    <p class="facility-desc">Spotless sterile environments built with specialized surgical lighting dome and standard robotic support tools.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Slide 3: Pathology & Diagnostics -->
+                        <div class="facility-slide">
+                            <div class="facility-card">
+                                <div class="facility-img">
+                                    <img src="images/diagnostic_lab.png" alt="Digital Pathology Diagnostics Lab at Kishnani Hospital">
+                                </div>
+                                <div class="facility-info">
+                                    <h3 class="facility-name">Pathology & Diagnostics</h3>
+                                    <p class="facility-desc">Highly precise analytical instruments providing fast, accurate digital blood test reports and scans.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 4: Inpatient Rooms & Lounges -->
+                        <div class="facility-slide">
+                            <div class="facility-card">
+                                <div class="facility-img">
+                                    <img src="images/hospital_reception.png" alt="Warm Reception Wait Lobby Inpatient Rooms at Kishnani Hospital">
+                                </div>
+                                <div class="facility-info">
+                                    <h3 class="facility-name">Inpatient Rooms & Lounges</h3>
+                                    <p class="facility-desc">Private, semi-private, and general medical ward rooms equipped with climate controls, nurse call panels, and a warm lounge.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slider Controls -->
+                <div class="facilities-slider-controls">
+                    <button class="slider-btn fac-btn-prev" aria-label="Previous Facility"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="slider-btn fac-btn-next" aria-label="Next Facility"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 24px;" class="scroll-reveal">
+                <a href="facilities.html" class="btn btn-secondary">Explore All Facilities <i class="fa-solid fa-hospital"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. MEET FEATURED DOCTORS -->
+    <section class="section-bg-alt" id="doctors">
+        <div class="container">
+            <div class="section-title-wrapper scroll-reveal">
+                <span class="section-tag">Our Panel Experts</span>
+                <h2 class="section-title">Experienced <span>Medical Doctors</span></h2>
+                <p class="section-desc">Consult with highly accredited clinical practitioners carrying decades of surgical and clinical diagnostic experience.</p>
+            </div>
+            
+            <div class="doctors-slider-wrapper scroll-reveal">
+                <div class="doctors-slider-container">
+                    <div class="doctors-track">
+                        <!-- Dr. Lal Kumar Kishnani -->
+                        <div class="doctor-slide">
+                            <div class="doctor-card">
+                                <div class="doctor-image-wrapper">
+                                    <img src="images/dr_lal_kishnani.png" alt="Dr. Lal Kumar Kishnani MD Medicine Chief Physician Bhopal">
+                                    <span class="badge badge-emergency doctor-badge">Director / Chief Physician</span>
+                                </div>
+                                <div class="doctor-info">
+                                    <span class="doctor-specialty">General & Internal Medicine</span>
+                                    <h3 class="doctor-name">Dr. Lal Kumar Kishnani</h3>
+                                    <span class="doctor-experience"><i class="fa-solid fa-award"></i> 30+ Years Experience</span>
+                                    <span class="doctor-timings"><i class="fa-solid fa-clock"></i> Mon-Sat: 10:00 AM - 2:00 PM</span>
+                                    <a href="appointment.html?dept=General+Medicine&doc=Dr.+Lal+Kumar+Kishnani" class="btn-book-doctor">Consult Dr. Lal Kumar</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dr. Rajesh Kishnani -->
+                        <div class="doctor-slide">
+                            <div class="doctor-card">
+                                <div class="doctor-image-wrapper">
+                                    <img src="images/dr_rajesh_kishnani.png" alt="Dr. Rajesh Kishnani Chief Surgeon at Kishnani Hospital Bhopal">
+                                    <span class="badge badge-emergency doctor-badge">Chief Surgeon</span>
+                                </div>
+                                <div class="doctor-info">
+                                    <span class="doctor-specialty">General & Laparoscopic Surgery</span>
+                                    <h3 class="doctor-name">Dr. Rajesh Kishnani</h3>
+                                    <span class="doctor-experience"><i class="fa-solid fa-award"></i> 25+ Years Experience</span>
+                                    <span class="doctor-timings"><i class="fa-solid fa-clock"></i> Mon-Sat: 11:00 AM - 3:00 PM</span>
+                                    <a href="appointment.html?dept=Surgery&doc=Dr.+Rajesh+Kishnani" class="btn-book-doctor">Consult Dr. Rajesh</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Dr. Anita Sharma -->
+                        <div class="doctor-slide">
+                            <div class="doctor-card">
+                                <div class="doctor-image-wrapper">
+                                    <img src="images/dr_anita_sharma.png" alt="Dr. Anita Sharma Gynecologist at Kishnani Hospital Bhopal">
+                                    <span class="badge badge-success doctor-badge">Popular</span>
+                                </div>
+                                <div class="doctor-info">
+                                    <span class="doctor-specialty">Gynecology & Obstetrics</span>
+                                    <h3 class="doctor-name">Dr. Anita Sharma</h3>
+                                    <span class="doctor-experience"><i class="fa-solid fa-award"></i> 18+ Years Experience</span>
+                                    <span class="doctor-timings"><i class="fa-solid fa-clock"></i> Mon-Sat: 12:00 PM - 4:00 PM</span>
+                                    <a href="appointment.html?dept=Gynecology&doc=Dr.+Anita+Sharma" class="btn-book-doctor">Consult Dr. Anita</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Dr. Mansi Kishnani -->
+                        <div class="doctor-slide">
+                            <div class="doctor-card">
+                                <div class="doctor-image-wrapper">
+                                    <img src="images/dr_mansi_kishnani.png" alt="Dr. Mansi Kishnani Consultant Eye Surgeon Bhopal">
+                                </div>
+                                <div class="doctor-info">
+                                    <span class="doctor-specialty">Ophthalmology (Eye Care)</span>
+                                    <h3 class="doctor-name">Dr. Mansi Kishnani</h3>
+                                    <span class="doctor-experience"><i class="fa-solid fa-award"></i> 10+ Years Experience</span>
+                                    <span class="doctor-timings"><i class="fa-solid fa-clock"></i> Mon-Fri: 4:00 PM - 7:00 PM</span>
+                                    <a href="appointment.html?dept=Ophthalmology&doc=Dr.+Mansi+Kishnani" class="btn-book-doctor">Consult Dr. Mansi</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dr. Sunita Patel -->
+                        <div class="doctor-slide">
+                            <div class="doctor-card">
+                                <div class="doctor-image-wrapper">
+                                    <img src="images/dr_sunita_patel.png" alt="Dr. Sunita Patel Consultant Cardiologist Bhopal">
+                                </div>
+                                <div class="doctor-info">
+                                    <span class="doctor-specialty">Cardiology</span>
+                                    <h3 class="doctor-name">Dr. Sunita Patel</h3>
+                                    <span class="doctor-experience"><i class="fa-solid fa-award"></i> 15+ Years Experience</span>
+                                    <span class="doctor-timings"><i class="fa-solid fa-clock"></i> Tue, Thu, Sat: 5:00 PM - 8:00 PM</span>
+                                    <a href="appointment.html?dept=Cardiology&doc=Dr.+Sunita+Patel" class="btn-book-doctor">Consult Dr. Sunita</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dr. Amit Verma -->
+                        <div class="doctor-slide">
+                            <div class="doctor-card">
+                                <div class="doctor-image-wrapper">
+                                    <img src="images/dr_amit_verma.png" alt="Dr. Amit Verma Pediatric Specialist Bhopal">
+                                </div>
+                                <div class="doctor-info">
+                                    <span class="doctor-specialty">Pediatrics</span>
+                                    <h3 class="doctor-name">Dr. Amit Verma</h3>
+                                    <span class="doctor-experience"><i class="fa-solid fa-award"></i> 12+ Years Experience</span>
+                                    <span class="doctor-timings"><i class="fa-solid fa-clock"></i> Mon-Sat: 10:00 AM - 1:00 PM</span>
+                                    <a href="appointment.html?dept=Pediatrics&doc=Dr.+Amit+Verma" class="btn-book-doctor">Consult Dr. Amit</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slider Controls -->
+                <div class="doctors-slider-controls">
+                    <button class="slider-btn doc-btn-prev" aria-label="Previous Doctor"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="slider-btn doc-btn-next" aria-label="Next Doctor"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 24px;" class="scroll-reveal">
+                <a href="doctors.html" class="btn btn-primary">See All Doctors <i class="fa-solid fa-user-doctor"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. PATIENT TESTIMONIAL SLIDER -->
+    <section class="testimonials-section" id="testimonials">
+        <div class="container">
+            <div class="section-title-wrapper scroll-reveal">
+                <span class="section-tag">Patient Success Stories</span>
+                <h2 class="section-title">Stories <span>Of Trust</span></h2>
+                <p class="section-desc">See testimonials from Indian families who experienced recovery and comfort in our clinical care wards.</p>
+            </div>
+            
+            <div class="testimonials-slider-wrapper scroll-reveal">
+                <div class="testimonials-track">
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card">
+                            <span class="testimonial-quote-icon"><i class="fa-solid fa-quote-left"></i></span>
+                            <div class="testimonial-rating">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">"Kishnani Hospital provided exemplary diagnostics and nursing care during my father's surgery. Dr. Rajesh Kishnani was highly empathetic and explained everything clearly. The modular OT and ICU settings are standard, and the staff is cooperative."</p>
+                            <div class="testimonial-author">
+                                <div class="testimonial-author-avatar">MS</div>
+                                <div>
+                                    <h4 class="testimonial-author-name">Mukesh Sharma</h4>
+                                    <span class="testimonial-author-location">Bairagarh, Bhopal</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card">
+                            <span class="testimonial-quote-icon"><i class="fa-solid fa-quote-left"></i></span>
+                            <div class="testimonial-rating">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">"We brought our daughter here for neonatal care under Dr. Anita. The facilities are modern and extremely hygienic. Their cashless claim support made our insurance settlement quick and painless."</p>
+                            <div class="testimonial-author">
+                                <div class="testimonial-author-avatar">KP</div>
+                                <div>
+                                    <h4 class="testimonial-author-name">Kavita Patel</h4>
+                                    <span class="testimonial-author-location">Main Road, Bairagarh</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card">
+                            <span class="testimonial-quote-icon"><i class="fa-solid fa-quote-left"></i></span>
+                            <div class="testimonial-rating">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">"I underwent orthopedic knee treatment at Kishnani Hospital under Dr. Devendra Kushwaha. The physiotherapy guidance, sterile recovery ward, and personal attention from the doctors were incredible. Strongly recommended for orthopedic care in Bhopal."</p>
+                            <div class="testimonial-author">
+                                <div class="testimonial-author-avatar">JL</div>
+                                <div>
+                                    <h4 class="testimonial-author-name">Jitendra Lalwani</h4>
+                                    <span class="testimonial-author-location">Lalghati, Bhopal</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slider-controls">
+                    <div class="slider-btn slider-btn-prev"><i class="fa-solid fa-arrow-left"></i></div>
+                    <div class="slider-btn slider-btn-next"><i class="fa-solid fa-arrow-right"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. FAQ SECTION -->
+    <section class="section-bg-alt" id="faq">
+        <div class="container">
+            <div class="section-title-wrapper scroll-reveal">
+                <span class="section-tag">Common Queries</span>
+                <h2 class="section-title">Frequently Asked <span>Questions</span></h2>
+                <p class="section-desc">Read answers to frequently asked questions about booking, operations, diagnostics, and cashless support.</p>
+            </div>
+            
+            <div class="accordion scroll-reveal">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h4 class="accordion-title">What are the hospital consulting hours?</h4>
+                        <span class="accordion-toggle-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            The Emergency Ward, ICU, and inpatient departments are open 24 hours, 7 days a week, 365 days a year. General OPD and clinical doctor consultation hours occur between 10:00 AM and 8:00 PM daily except Sunday, with doctor schedules varyingly split.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h4 class="accordion-title">How do I book a direct consultation with a specialist doctor?</h4>
+                        <span class="accordion-toggle-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            You can easily schedule a consultation by clicking 'Book Appointment' on our top bar, selecting the department, choosing your doctor and a preferred date. You can also call us directly at +91 755 264 2960 for booking assistance.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h4 class="accordion-title">Do you support cashless health insurance plans?</h4>
+                        <span class="accordion-toggle-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            Yes. Kishnani Hospital partners with all major Third-Party Administrators (TPAs) and corporate health insurance carriers in India (including Star Health, HDFC Ergo, ICICI Lombard, Bajaj Allianz, etc.) to provide cashless diagnostic and ward procedures.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h4 class="accordion-title">Is emergency ambulance pick-up available in Bairagarh and Lalghati?</h4>
+                        <span class="accordion-toggle-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            Yes, we operate a 24/7 dedicated critical ambulance team offering rapid pickup services throughout Bairagarh, Lalghati, Halalpura, and adjacent zones in Bhopal. Please call our emergency response desk at +91 755 264 2960 for immediate help.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h4 class="accordion-title">What documents are required to claim Ayushman Bharat (PM-JAY) cashless benefits?</h4>
+                        <span class="accordion-toggle-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            Eligible beneficiaries need to submit their active Ayushman Card (Golden Card), a government-issued photo identity proof (Aadhaar Card preferred), and their family Ration Card at our dedicated reception helpdesk to process cashless clinical admission under the scheme.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 11. INSURANCE PARTNERS SCROLLING SHOWCASE -->
+    <div class="insurance-partners scroll-reveal">
+        <div class="container">
+            <h3 class="insurance-title">Cashless Insurance Partners</h3>
+            <div class="insurance-slider">
+                <div class="insurance-track">
+                    <span class="insurance-logo-item"><i class="fa-solid fa-shield-halved"></i> Star Health Insurance</span>
+                    <span class="insurance-logo-item"><i class="fa-solid fa-shield-halved"></i> HDFC Ergo</span>
+                    <span class="insurance-logo-item"><i class="fa-solid fa-shield-halved"></i> ICICI Lombard</span>
+                    <span class="insurance-logo-item"><i class="fa-solid fa-shield-halved"></i> Bajaj Allianz</span>
+                    <span class="insurance-logo-item"><i class="fa-solid fa-shield-halved"></i> Niva Bupa</span>
+                    <span class="insurance-logo-item"><i class="fa-solid fa-shield-halved"></i> Star Health Insurance</span>
+                    <span class="insurance-logo-item"><i class="fa-solid fa-shield-halved"></i> HDFC Ergo</span>
+                    <span class="insurance-logo-item"><i class="fa-solid fa-shield-halved"></i> ICICI Lombard</span>
+                    <span class="insurance-logo-item"><i class="fa-solid fa-shield-halved"></i> Bajaj Allianz</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 11.5. GOVERNMENT SCHEMES & PREVENTIVE HEALTH CHECKUPS -->
+    <section class="schemes-packages-section scroll-reveal" id="schemes-packages">
+        <div class="container">
+            <div class="section-title-wrapper text-center">
+                <span class="section-tag">Empanelled Schemes & Wellness</span>
+                <h2 class="section-title">Government Schemes & <span>Health Packages</span></h2>
+                <p class="section-desc">Kishnani Hospital is proud to bring free and highly subsidized healthcare benefits of national welfare programs alongside customized preventive checkups for your family.</p>
+            </div>
+
+            <div class="schemes-packages-grid">
+                <!-- Government Empanelled Schemes Card -->
+                <div class="scheme-card">
+                    <div class="scheme-header">
+                        <div class="scheme-icon">
+                            <i class="fa-solid fa-indian-rupee-sign"></i>
+                        </div>
+                        <div>
+                            <span class="badge badge-success">Fully Empanelled</span>
+                            <h3>Government Healthcare Schemes</h3>
+                        </div>
+                    </div>
+                    <p class="scheme-desc">We offer standard empanelment under crucial national and state healthcare schemes to provide cashless treatment for eligible citizens of Madhya Pradesh.</p>
+                    <ul class="scheme-list">
+                        <li>
+                            <i class="fa-solid fa-circle-check"></i>
+                            <div>
+                                <strong style="color: var(--primary);">Ayushman Bharat (PM-JAY)</strong>
+                                <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 4px;">Up to ₹5 Lakhs per family per year of free cashless tertiary care hospitalizations for card holders.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-circle-check"></i>
+                            <div>
+                                <strong style="color: var(--primary);">MP State Government Employee Health Scheme</strong>
+                                <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 4px;">Cashless indoor clinical procedures and medical support for active and retired state government officers.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-circle-check"></i>
+                            <div>
+                                <strong style="color: var(--primary);">Dedicated Helpdesk & Easy Admission</strong>
+                                <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 4px;">A specialized desk opposite the main lobby coordinates card validations, documents filing, and fast cashless check-ins.</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <div style="margin-top: auto;">
+                        <a href="contact.html#enquiry" class="btn btn-secondary" style="width: 100%;">Inquire About Scheme Eligibility</a>
+                    </div>
+                </div>
+
+                <!-- Preventive Health Checkups Card -->
+                <div class="scheme-card">
+                    <div class="scheme-header">
+                        <div class="scheme-icon">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                        </div>
+                        <div>
+                            <span class="badge badge-info">Preventive Care</span>
+                            <h3>Wellness Health Packages</h3>
+                        </div>
+                    </div>
+                    <p class="scheme-desc">Choose from our specialized preventive diagnostics packages designed to detect health risks early and maintain healthy vitals.</p>
+                    <div class="package-cards-container">
+                        <!-- Package 1 -->
+                        <div class="package-item">
+                            <div class="package-details">
+                                <h4>Basic Wellness Checkup</h4>
+                                <p>Essential screenings for general health tracking.</p>
+                                <div class="package-tags">
+                                    <span class="package-tag">CBC & ESR</span>
+                                    <span class="package-tag">Blood Sugar</span>
+                                    <span class="package-tag">Urine Routine</span>
+                                    <span class="package-tag">ECG</span>
+                                </div>
+                            </div>
+                            <div class="package-price-action">
+                                <div class="package-price">₹999 <span>/-</span></div>
+                                <a href="appointment.html?dept=General+Medicine&doc=Dr.+Lal+Kumar+Kishnani&package=Basic+Wellness" class="btn-package-book">Book Package</a>
+                            </div>
+                        </div>
+
+                        <!-- Package 2 -->
+                        <div class="package-item">
+                            <div class="package-details">
+                                <h4>Executive Health Package</h4>
+                                <p>Comprehensive testing of major organs and metabolic markers.</p>
+                                <div class="package-tags">
+                                    <span class="package-tag">Liver Panel</span>
+                                    <span class="package-tag">Kidney Panel</span>
+                                    <span class="package-tag">Lipid Profile</span>
+                                    <span class="package-tag">Chest X-Ray</span>
+                                </div>
+                            </div>
+                            <div class="package-price-action">
+                                <div class="package-price">₹2,499 <span>/-</span></div>
+                                <a href="appointment.html?dept=General+Medicine&doc=Dr.+Lal+Kumar+Kishnani&package=Executive+Health" class="btn-package-book">Book Package</a>
+                            </div>
+                        </div>
+
+                        <!-- Package 3 -->
+                        <div class="package-item">
+                            <div class="package-details">
+                                <h4>Women's Health Shield</h4>
+                                <p>Customized diagnostic screening for vital female health profiles.</p>
+                                <div class="package-tags">
+                                    <span class="package-tag">Thyroid T3/T4/TSH</span>
+                                    <span class="package-tag">Pap Smear</span>
+                                    <span class="package-tag">USG Pelvis</span>
+                                    <span class="package-tag">Gynec Consult</span>
+                                </div>
+                            </div>
+                            <div class="package-price-action">
+                                <div class="package-price">₹2,999 <span>/-</span></div>
+                                <a href="appointment.html?dept=Gynecology&doc=Dr.+Anita+Sharma&package=Womens+Shield" class="btn-package-book">Book Package</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 12. 24x7 EMERGENCY CALL TO ACTION BANNER -->
+    <section class="emergency-banner-section">
+        <div class="container">
+            <div class="emergency-banner-wrapper scroll-reveal">
+                <span class="emergency-banner-tag">24x7 Critical Support</span>
+                <h2 class="emergency-banner-title">Need Immediate Medical Attention?</h2>
+                <p class="emergency-banner-desc">Our emergency ambulance and surgical critical staff are alert and active around the clock. Connect instantly to secure immediate help.</p>
+                <div class="emergency-call-bar">
+                    <a href="tel:+917552642960" class="btn btn-emergency"><i class="fa-solid fa-phone-flip"></i> Call Ambulance</a>
+                    <span class="emergency-call-number">Hotline: <span>+91 755 264 2960</span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 13. FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-col footer-col-brand">
+                    <a href="index.html" class="logo-container">
+                        <div class="logo-icon-wrapper">
+                            <i class="fa-solid fa-house-chimney-medical"></i>
+                        </div>
+                        <div class="logo-text">
+                            <span class="logo-title">KISHNANI</span>
+                            <span class="logo-subtitle">HOSPITAL</span>
+                        </div>
+                    </a>
+                    <p class="footer-brand-desc">Delivering advanced clinical diagnostic expertise, critical modular OT capabilities, and medical care services in Bairagarh, Bhopal since 2001.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="social-link" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="social-link" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="departments.html">Departments</a></li>
+                        <li><a href="doctors.html">Our Doctors</a></li>
+                        <li><a href="facilities.html">Facilities</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Contact Info</h4>
+                    <ul class="footer-contact-list">
+                        <li>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>Sant Hirdaram Ki Kutiya Ke Samne, Main Road Bairagarh, Bhopal, Madhya Pradesh 462030, India</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-phone"></i>
+                            <span>+91 755 264 2960</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>info@kishnanihospital.com</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-clock"></i>
+                            <span>Open 24/7 (Emergency Wards)</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Directions</h4>
+                    <span style="font-size: 0.85rem; color: #94A3B8;">Landmark: Behind Herdev Hospital, Opposite Sant Hirdaram Kutiya.</span>
+                    <div class="footer-map-container">
+                        <!-- Custom Embed Google Map of Bairagarh Bhopal -->
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3665.4988771146747!2d77.3400588!3d23.2612999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397c69992f58e4cf%3A0xe5a3eb8749a21fe!2sKishnani%20Hospital!5e0!3m2!1sen!2sin!4v1716300000000!5m2!1sen!2sin" loading="lazy" referrerpolicy="no-referrer-when-downgrade" aria-label="Kishnani Hospital Location Google Map"></iframe>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Kishnani Hospital. All Rights Reserved. Designed with Luxury Healthcare Aesthetic.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 14. FLOATING WIDGETS -->
+    <div class="floating-widgets">
+        <a href="tel:+917552642960" class="float-btn float-emergency" aria-label="Direct Hotline Call"><i class="fa-solid fa-phone"></i></a>
+        <a href="https://wa.me/917552642960?text=Hello%20Kishnani%20Hospital,%20I%20would%20like%20to%20inquire%20about%20booking%20an%20appointment." target="_blank" class="float-btn float-whatsapp" aria-label="WhatsApp Support"><i class="fa-brands fa-whatsapp"></i></a>
+    </div>
+
+    <!-- 15. JAVASCRIPT ANIMATIONS & SCRIPTS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

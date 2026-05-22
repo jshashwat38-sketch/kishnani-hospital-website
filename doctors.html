@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Doctors | Kishnani Hospital Bairagarh Bhopal</title>
+    
+    <meta name="description" content="Meet our board of highly qualified senior medical doctors at Kishnani Hospital. Book consultation slots with pediatricians, surgeons and gynecologists.">
+    <meta name="keywords" content="Doctor panel Bhopal, Surgeon in Bairagarh, Best gynecologist Bhopal, Cardiologist Bairagarh, Pediatric doctor Bhopal">
+    
+    <link rel="icon" type="image/png" href="images/favicon.png" onerror="this.href='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%2300A896%22><path d=%22M19 10.5h-5.5V5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v5.5H5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5h5.5V19c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-5.5H19c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5z%22/></svg>'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <style>
+        .page-hero {
+            background: linear-gradient(rgba(10, 34, 64, 0.8), rgba(10, 34, 64, 0.9)), url('images/hero_banner.png') no-repeat center center/cover;
+            padding: 120px 0 60px 0;
+            color: var(--text-light);
+            text-align: center;
+        }
+        .page-hero h1 {
+            color: var(--text-light);
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+        .breadcrumbs {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            color: #94A3B8;
+        }
+        .breadcrumbs a {
+            color: var(--secondary);
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PRELOADER HEARTBEAT SCREEN -->
+    <div class="preloader" id="preloader">
+        <div class="heartbeat-loader">
+            <div class="loader-circle"></div>
+            <i class="fa-solid fa-heart-pulse heart-icon"></i>
+        </div>
+        <span class="preloader-text">Kishnani Hospital</span>
+    </div>
+
+    <!-- Sticky Navbar -->
+    <header class="header-wrapper" id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo-container">
+                    <div class="logo-icon-wrapper">
+                        <i class="fa-solid fa-house-chimney-medical"></i>
+                    </div>
+                    <div class="logo-text">
+                        <span class="logo-title">KISHNANI</span>
+                        <span class="logo-subtitle">HOSPITAL</span>
+                    </div>
+                </a>
+                
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+                    <li class="nav-item dropdown">
+                        <a href="departments.html" class="nav-link dropdown-trigger">Departments <i class="fa-solid fa-chevron-down dropdown-icon"></i></a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item"><a href="departments.html?dept=General Medicine">General Medicine</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Gynecology">Gynecology</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Pediatrics">Pediatrics</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Orthopedics">Orthopedics</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Surgery">Surgery</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Cardiology">Cardiology</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a href="doctors.html" class="nav-link active">Doctors</a></li>
+                    <li class="nav-item"><a href="facilities.html" class="nav-link">Facilities</a></li>
+                    <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+                
+                <div class="nav-cta">
+                    <a href="appointment.html" class="btn-nav-appointment">Book Appointment</a>
+                </div>
+                
+                <div class="mobile-nav-toggle" id="mobile-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- PAGE HERO HEADER -->
+    <div class="page-hero">
+        <div class="container">
+            <h1>Meet Our Panel Experts</h1>
+            <div class="breadcrumbs">
+                <a href="index.html">Home</a> &gt; <span>Doctors</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- DOCTORS FILTER & GRID SECTION -->
+    <section id="our-doctors">
+        <div class="container">
+            <div class="section-title-wrapper scroll-reveal">
+                <span class="section-tag">Accredited Panel</span>
+                <h2 class="section-title">Senior <span>Practitioners</span></h2>
+                <p class="section-desc">Our team comprises highly qualified clinical specialists and surgeons committed to delivering patient-centric medical treatment and guidance.</p>
+            </div>
+            
+            <!-- Category Filtering Tabs -->
+            <div class="doctors-filter-tabs scroll-reveal">
+                <button class="filter-btn active" data-filter="all">All Doctors</button>
+                <button class="filter-btn" data-filter="medicine">General Medicine</button>
+                <button class="filter-btn" data-filter="gynecology">Gynecology</button>
+                <button class="filter-btn" data-filter="surgery">General Surgery</button>
+                <button class="filter-btn" data-filter="cardiology">Cardiology</button>
+                <button class="filter-btn" data-filter="orthopedics">Orthopedics</button>
+                <button class="filter-btn" data-filter="pediatrics">Pediatrics</button>
+                <button class="filter-btn" data-filter="ophthalmology">Ophthalmology</button>
+            </div>
+            
+            <!-- Doctors Grid Container -->
+            <div class="doctors-grid grid-reveal" id="doctors-listing">
+                <!-- Dr. Lal Kumar Kishnani -->
+                <div class="doctor-card" data-specialty="medicine">
+                    <div class="doctor-image-wrapper">
+                        <img src="images/dr_lal_kishnani.png" alt="Dr. Lal Kumar Kishnani MD Medicine Chief Physician Bhopal">
+                        <span class="badge badge-emergency doctor-badge">Director / Chief Physician</span>
+                    </div>
+                    <div class="doctor-info">
+                        <span class="doctor-specialty">General & Internal Medicine</span>
+                        <h3 class="doctor-name">Dr. Lal Kumar Kishnani</h3>
+                        <span class="doctor-experience"><i class="fa-solid fa-award"></i> 30+ Years Experience</span>
+                        <span class="doctor-timings"><i class="fa-solid fa-clock"></i> Mon-Sat: 10:00 AM - 2:00 PM</span>
+                        <a href="appointment.html?dept=General+Medicine&doc=Dr.+Lal+Kumar+Kishnani" class="btn-book-doctor">Consult Dr. Lal Kumar</a>
+                    </div>
+                </div>
+
+                <!-- Dr. Rajesh Kishnani -->
+                <div class="doctor-card" data-specialty="surgery">
+                    <div class="doctor-image-wrapper">
+                        <img src="images/dr_rajesh_kishnani.png" alt="Dr. Rajesh Kishnani MS Chief Surgeon Bhopal">
+                        <span class="badge badge-emergency doctor-badge">Chief Surgeon</span>
+                    </div>
+                    <div class="doctor-info">
+                        <span class="doctor-specialty">General & Laparoscopic Surgery</span>
+                        <h3 class="doctor-name">Dr. Rajesh Kishnani</h3>
+                        <span class="doctor-experience"><i class="fa-solid fa-award"></i> 25+ Years Experience</span>
+                        <span class="doctor-timings"><i class="fa-solid fa-clock"></i> Mon-Sat: 11:00 AM - 3:00 PM</span>
+                        <a href="appointment.html?dept=Surgery&doc=Dr.+Rajesh+Kishnani" class="btn-book-doctor">Consult Dr. Rajesh</a>
+                    </div>
+                </div>
+                
+                <!-- Dr. Anita Sharma -->
+                <div class="doctor-card" data-specialty="gynecology">
+                    <div class="doctor-image-wrapper">
+                        <img src="images/dr_anita_sharma.png" alt="Dr. Anita Sharma Obstetrician Gynecologist Bhopal">
+                        <span class="badge badge-success doctor-badge">Popular</span>
+                    </div>
+                    <div class="doctor-info">
+                        <span class="doctor-specialty">Gynecology & Obstetrics</span>
+                        <h3 class="doctor-name">Dr. Anita Sharma</h3>
+                        <span class="doctor-experience"><i class="fa-solid fa-award"></i> 18+ Years Experience</span>
+                        <span class="doctor-timings"><i class="fa-solid fa-clock"></i> Mon-Sat: 12:00 PM - 4:00 PM</span>
+                        <a href="appointment.html?dept=Gynecology&doc=Dr.+Anita+Sharma" class="btn-book-doctor">Consult Dr. Anita</a>
+                    </div>
+                </div>
+                
+                <!-- Dr. Mansi Kishnani -->
+                <div class="doctor-card" data-specialty="ophthalmology">
+                    <div class="doctor-image-wrapper">
+                        <img src="images/dr_mansi_kishnani.png" alt="Dr. Mansi Kishnani Consultant Eye Surgeon Bhopal">
+                    </div>
+                    <div class="doctor-info">
+                        <span class="doctor-specialty">Ophthalmology (Eye Care)</span>
+                        <h3 class="doctor-name">Dr. Mansi Kishnani</h3>
+                        <span class="doctor-experience"><i class="fa-solid fa-award"></i> 10+ Years Experience</span>
+                        <span class="doctor-timings"><i class="fa-solid fa-clock"></i> Mon-Fri: 4:00 PM - 7:00 PM</span>
+                        <a href="appointment.html?dept=Ophthalmology&doc=Dr.+Mansi+Kishnani" class="btn-book-doctor">Consult Dr. Mansi</a>
+                    </div>
+                </div>
+
+                <!-- Dr. Sunita Patel -->
+                <div class="doctor-card" data-specialty="cardiology">
+                    <div class="doctor-image-wrapper">
+                        <img src="images/dr_sunita_patel.png" alt="Dr. Sunita Patel Consultant Cardiologist Bhopal">
+                    </div>
+                    <div class="doctor-info">
+                        <span class="doctor-specialty">Cardiology</span>
+                        <h3 class="doctor-name">Dr. Sunita Patel</h3>
+                        <span class="doctor-experience"><i class="fa-solid fa-award"></i> 15+ Years Experience</span>
+                        <span class="doctor-timings"><i class="fa-solid fa-clock"></i> Tue, Thu, Sat: 5:00 PM - 8:00 PM</span>
+                        <a href="appointment.html?dept=Cardiology&doc=Dr.+Sunita+Patel" class="btn-book-doctor">Consult Dr. Sunita</a>
+                    </div>
+                </div>
+                
+                <!-- Dr. Amit Verma -->
+                <div class="doctor-card" data-specialty="pediatrics">
+                    <div class="doctor-image-wrapper">
+                        <img src="images/dr_amit_verma.png" alt="Dr. Amit Verma Pediatric Specialist Bhopal">
+                    </div>
+                    <div class="doctor-info">
+                        <span class="doctor-specialty">Pediatrics</span>
+                        <h3 class="doctor-name">Dr. Amit Verma</h3>
+                        <span class="doctor-experience"><i class="fa-solid fa-award"></i> 12+ Years Experience</span>
+                        <span class="doctor-timings"><i class="fa-solid fa-clock"></i> Mon-Sat: 10:00 AM - 1:00 PM</span>
+                        <a href="appointment.html?dept=Pediatrics&doc=Dr.+Amit+Verma" class="btn-book-doctor">Consult Dr. Amit</a>
+                    </div>
+                </div>
+                
+                <!-- Dr. Sandeep Malviya -->
+                <div class="doctor-card" data-specialty="medicine">
+                    <div class="doctor-image-wrapper">
+                        <img src="images/dr_sandeep_malviya.png" alt="Dr. Sandeep Malviya General Medicine Physician Bhopal">
+                    </div>
+                    <div class="doctor-info">
+                        <span class="doctor-specialty">General Medicine</span>
+                        <h3 class="doctor-name">Dr. Sandeep Malviya</h3>
+                        <span class="doctor-experience"><i class="fa-solid fa-award"></i> 10+ Years Experience</span>
+                        <span class="doctor-timings"><i class="fa-solid fa-clock"></i> Mon-Sat: 9:00 AM - 12:00 PM</span>
+                        <a href="appointment.html?dept=General+Medicine&doc=Dr.+Sandeep+Malviya" class="btn-book-doctor">Consult Dr. Sandeep</a>
+                    </div>
+                </div>
+                
+                <!-- Dr. Devendra Kushwaha -->
+                <div class="doctor-card" data-specialty="orthopedics">
+                    <div class="doctor-image-wrapper">
+                        <img src="images/dr_devendra_kushwaha.png" alt="Dr. Devendra Kushwaha Orthopedics Surgeon Bhopal">
+                    </div>
+                    <div class="doctor-info">
+                        <span class="doctor-specialty">Orthopedics & Spine Surgery</span>
+                        <h3 class="doctor-name">Dr. Devendra Kushwaha</h3>
+                        <span class="doctor-experience"><i class="fa-solid fa-award"></i> 16+ Years Experience</span>
+                        <span class="doctor-timings"><i class="fa-solid fa-clock"></i> Mon-Sat: 11:00 AM - 3:00 PM</span>
+                        <a href="appointment.html?dept=Orthopedics&doc=Dr.+Devendra+Kushwaha" class="btn-book-doctor">Consult Dr. Devendra</a>
+                    </div>
+                </div>
+
+                <!-- Dr. Vikas Choudhary -->
+                <div class="doctor-card" data-specialty="orthopedics">
+                    <div class="doctor-image-wrapper">
+                        <img src="images/dr_vikas_choudhary.png" alt="Dr. Vikas Choudhary Orthopedics Specialist Bhopal">
+                    </div>
+                    <div class="doctor-info">
+                        <span class="doctor-specialty">Trauma & Orthopedic Surgery</span>
+                        <h3 class="doctor-name">Dr. Vikas Choudhary</h3>
+                        <span class="doctor-experience"><i class="fa-solid fa-award"></i> 14+ Years Experience</span>
+                        <span class="doctor-timings"><i class="fa-solid fa-clock"></i> Mon-Sat: 2:00 PM - 6:00 PM</span>
+                        <a href="appointment.html?dept=Orthopedics&doc=Dr.+Vikas+Choudhary" class="btn-book-doctor">Consult Dr. Vikas</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 24x7 EMERGENCY CALL TO ACTION BANNER -->
+    <section class="emergency-banner-section">
+        <div class="container">
+            <div class="emergency-banner-wrapper scroll-reveal">
+                <span class="emergency-banner-tag">24x7 Critical Support</span>
+                <h2 class="emergency-banner-title">Need Immediate Medical Attention?</h2>
+                <p class="emergency-banner-desc">Our emergency ambulance and surgical critical staff are alert and active around the clock. Connect instantly to secure immediate help.</p>
+                <div class="emergency-call-bar">
+                    <a href="tel:+917552642960" class="btn btn-emergency"><i class="fa-solid fa-phone-flip"></i> Call Ambulance</a>
+                    <span class="emergency-call-number">Hotline: <span>+91 755 264 2960</span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-col footer-col-brand">
+                    <a href="index.html" class="logo-container">
+                        <div class="logo-icon-wrapper">
+                            <i class="fa-solid fa-house-chimney-medical"></i>
+                        </div>
+                        <div class="logo-text">
+                            <span class="logo-title">KISHNANI</span>
+                            <span class="logo-subtitle">HOSPITAL</span>
+                        </div>
+                    </a>
+                    <p class="footer-brand-desc">Delivering advanced clinical diagnostic expertise, critical modular OT capabilities, and medical care services in Bairagarh, Bhopal since 2001.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="social-link" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="social-link" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="departments.html">Departments</a></li>
+                        <li><a href="doctors.html">Our Doctors</a></li>
+                        <li><a href="facilities.html">Facilities</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Contact Info</h4>
+                    <ul class="footer-contact-list">
+                        <li>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>Sant Hirdaram Ki Kutiya Ke Samne, Main Road Bairagarh, Bhopal, Madhya Pradesh 462030, India</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-phone"></i>
+                            <span>+91 755 264 2960</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>info@kishnanihospital.com</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-clock"></i>
+                            <span>Open 24/7 (Emergency Wards)</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Directions</h4>
+                    <span style="font-size: 0.85rem; color: #94A3B8;">Landmark: Behind Herdev Hospital, Opposite Sant Hirdaram Kutiya.</span>
+                    <div class="footer-map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3665.4988771146747!2d77.3400588!3d23.2612999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397c69992f58e4cf%3A0xe5a3eb8749a21fe!2sKishnani%20Hospital!5e0!3m2!1sen!2sin!4v1716300000000!5m2!1sen!2sin" loading="lazy" referrerpolicy="no-referrer-when-downgrade" aria-label="Kishnani Hospital Location Google Map"></iframe>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Kishnani Hospital. All Rights Reserved. Designed with Luxury Healthcare Aesthetic.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- FLOATING WIDGETS -->
+    <div class="floating-widgets">
+        <a href="tel:+917552642960" class="float-btn float-emergency" aria-label="Direct Hotline Call"><i class="fa-solid fa-phone"></i></a>
+        <a href="https://wa.me/917552642960?text=Hello%20Kishnani%20Hospital,%20I%20would%20like%20to%20inquire%20about%20booking%20an%20appointment." target="_blank" class="float-btn float-whatsapp" aria-label="WhatsApp Support"><i class="fa-brands fa-whatsapp"></i></a>
+    </div>
+
+    <!-- JAVASCRIPT ANIMATIONS & INTERACTIVE FILTERING -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const docFilterButtons = document.querySelectorAll(".doctors-filter-tabs .filter-btn");
+            const docCards = document.querySelectorAll("#doctors-listing .doctor-card");
+            
+            if(docFilterButtons.length > 0 && docCards.length > 0) {
+                docFilterButtons.forEach(button => {
+                    button.addEventListener("click", () => {
+                        // Change active button
+                        docFilterButtons.forEach(btn => btn.classList.remove("active"));
+                        button.classList.add("active");
+                        
+                        const selectedFilter = button.getAttribute("data-filter");
+                        
+                        // GSAP Animation Reveal
+                        if(typeof gsap !== "undefined") {
+                            const showCards = [];
+                            const hideCards = [];
+                            
+                            docCards.forEach(card => {
+                                const specialty = card.getAttribute("data-specialty");
+                                if (selectedFilter === "all" || specialty === selectedFilter) {
+                                    showCards.push(card);
+                                } else {
+                                    hideCards.push(card);
+                                }
+                            });
+                            
+                            if (hideCards.length > 0) {
+                                gsap.to(hideCards, {
+                                    scale: 0.85,
+                                    opacity: 0,
+                                    duration: 0.3,
+                                    onComplete: () => {
+                                        hideCards.forEach(c => c.style.display = "none");
+                                    }
+                                });
+                            }
+                            
+                            showCards.forEach(c => c.style.display = "flex");
+                            gsap.fromTo(showCards, 
+                                { scale: 0.85, opacity: 0 },
+                                { scale: 1, opacity: 1, duration: 0.4, delay: 0.1 }
+                            );
+                        } else {
+                            // CSS fallback
+                            docCards.forEach(card => {
+                                const specialty = card.getAttribute("data-specialty");
+                                if(selectedFilter === "all" || specialty === selectedFilter) {
+                                    card.style.display = "flex";
+                                } else {
+                                    card.style.display = "none";
+                                }
+                            });
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

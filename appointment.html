@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book an Appointment | Kishnani Hospital Bhopal</title>
+    
+    <meta name="description" content="Use our interactive wizard to book medical appointment slots at Kishnani Hospital Bairagarh. Pre-fill departments and select senior surgeons.">
+    <meta name="keywords" content="Book doctor Bhopal, Hospital appointment Bairagarh, Cashless diagnostic booking, Specialist doctor schedule Bhopal">
+    
+    <link rel="icon" type="image/png" href="images/favicon.png" onerror="this.href='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%2300A896%22><path d=%22M19 10.5h-5.5V5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v5.5H5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5h5.5V19c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-5.5H19c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5z%22/></svg>'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <style>
+        .page-hero {
+            background: linear-gradient(rgba(10, 34, 64, 0.8), rgba(10, 34, 64, 0.9)), url('images/hero_banner.png') no-repeat center center/cover;
+            padding: 120px 0 60px 0;
+            color: var(--text-light);
+            text-align: center;
+        }
+        .page-hero h1 {
+            color: var(--text-light);
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+        .breadcrumbs {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            color: #94A3B8;
+        }
+        .breadcrumbs a {
+            color: var(--secondary);
+            margin: 0 5px;
+        }
+        
+        /* Inline helper styles */
+        .btn-wizard-nav {
+            padding: 12px 24px;
+            font-size: 0.9rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition-smooth);
+        }
+        .btn-wizard-nav.prev {
+            background: var(--bg-secondary);
+            color: var(--primary);
+            border: 1px solid rgba(10, 34, 64, 0.1);
+        }
+        .btn-wizard-nav.prev:hover {
+            background: rgba(10, 34, 64, 0.05);
+        }
+        .btn-wizard-nav.next, .btn-wizard-nav.submit {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: var(--text-light);
+            box-shadow: 0 4px 15px rgba(0, 168, 150, 0.2);
+        }
+        .btn-wizard-nav.next:hover, .btn-wizard-nav.submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 168, 150, 0.35);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PRELOADER HEARTBEAT SCREEN -->
+    <div class="preloader" id="preloader">
+        <div class="heartbeat-loader">
+            <div class="loader-circle"></div>
+            <i class="fa-solid fa-heart-pulse heart-icon"></i>
+        </div>
+        <span class="preloader-text">Kishnani Hospital</span>
+    </div>
+
+    <!-- Sticky Navbar -->
+    <header class="header-wrapper" id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo-container">
+                    <div class="logo-icon-wrapper">
+                        <i class="fa-solid fa-house-chimney-medical"></i>
+                    </div>
+                    <div class="logo-text">
+                        <span class="logo-title">KISHNANI</span>
+                        <span class="logo-subtitle">HOSPITAL</span>
+                    </div>
+                </a>
+                
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+                    <li class="nav-item dropdown">
+                        <a href="departments.html" class="nav-link dropdown-trigger">Departments <i class="fa-solid fa-chevron-down dropdown-icon"></i></a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item"><a href="departments.html?dept=General Medicine">General Medicine</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Gynecology">Gynecology</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Pediatrics">Pediatrics</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Orthopedics">Orthopedics</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Surgery">Surgery</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Cardiology">Cardiology</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a href="doctors.html" class="nav-link">Doctors</a></li>
+                    <li class="nav-item"><a href="facilities.html" class="nav-link">Facilities</a></li>
+                    <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+                
+                <div class="nav-cta">
+                    <a href="appointment.html" class="btn-nav-appointment active">Book Appointment</a>
+                </div>
+                
+                <div class="mobile-nav-toggle" id="mobile-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- PAGE HERO HEADER -->
+    <div class="page-hero">
+        <div class="container">
+            <h1>Book Your Consultations</h1>
+            <div class="breadcrumbs">
+                <a href="index.html">Home</a> &gt; <span>Book Appointment</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOOKING FORM SECTION -->
+    <section id="appointment-booking">
+        <div class="container">
+            <div class="appointment-wizard-wrapper scroll-reveal">
+                
+                <!-- Form Header -->
+                <div class="appointment-wizard-header">
+                    <h3>Interactive Appointment Wizard</h3>
+                    <p>Complete 3 quick steps to reserve an in-clinic diagnostic consultation slot.</p>
+                </div>
+                
+                <!-- Steps indicators -->
+                <div class="wizard-steps">
+                    <div class="wizard-step active">
+                        <span class="wizard-step-num">1</span>
+                        <span class="wizard-step-label">Patient Info</span>
+                    </div>
+                    <div class="wizard-step-divider"></div>
+                    
+                    <div class="wizard-step">
+                        <span class="wizard-step-num">2</span>
+                        <span class="wizard-step-label">Speciality</span>
+                    </div>
+                    <div class="wizard-step-divider"></div>
+                    
+                    <div class="wizard-step">
+                        <span class="wizard-step-num">3</span>
+                        <span class="wizard-step-label">Confirmation</span>
+                    </div>
+                </div>
+                
+                <!-- Main Wizard Form Container -->
+                <div class="appointment-form-content" id="booking-form-container">
+                    <form id="appointment-wizard-form" novalidate>
+                        
+                        <!-- Step 1: Personal details -->
+                        <div class="form-step active" data-step="0">
+                            <h4 style="margin-bottom: 20px; font-family: 'Poppins', sans-serif; color: var(--primary);">Step 1: Patient Contact Information</h4>
+                            <div class="form-grid">
+                                <div class="form-group form-group-full">
+                                    <label for="name" class="form-label">Patient Full Name *</label>
+                                    <input type="text" id="name" class="form-control" placeholder="Enter patient name" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="phone" class="form-label">Indian Mobile Number *</label>
+                                    <input type="tel" id="phone" class="form-control" placeholder="10-digit number" required pattern="[6-9]\d{9}">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="email" class="form-label">Email Address (Optional)</label>
+                                    <input type="email" id="email" class="form-control" placeholder="name@domain.com">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 2: Department Selection -->
+                        <div class="form-step" data-step="1">
+                            <h4 style="margin-bottom: 20px; font-family: 'Poppins', sans-serif; color: var(--primary);">Step 2: Department & Doctor Panel</h4>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="department" class="form-label">Select Speciality *</label>
+                                    <select id="department" class="form-control" required>
+                                        <option value="">Select Department</option>
+                                        <option value="General Medicine">General Medicine</option>
+                                        <option value="Gynecology">Gynecology</option>
+                                        <option value="Pediatrics">Pediatrics</option>
+                                        <option value="Orthopedics">Orthopedics</option>
+                                        <option value="Surgery">General Surgery</option>
+                                        <option value="Cardiology">Cardiology</option>
+                                        <option value="Ophthalmology">Ophthalmology</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="doctor" class="form-label">Select Practitioner *</label>
+                                    <select id="doctor" class="form-control" required>
+                                        <option value="">Select Doctor</option>
+                                        <!-- Dynamically loaded in appointment.js -->
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 3: Preferred Schedule -->
+                        <div class="form-step" data-step="2">
+                            <h4 style="margin-bottom: 20px; font-family: 'Poppins', sans-serif; color: var(--primary);">Step 3: Preferred Date & Notes</h4>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="date" class="form-label">Preferred Date *</label>
+                                    <input type="date" id="date" class="form-control" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="time" class="form-label">Preferred Time Slot *</label>
+                                    <select id="time" class="form-control" required>
+                                        <option value="10:00 AM - 12:00 PM">Morning (10:00 AM - 12:00 PM)</option>
+                                        <option value="12:00 PM - 02:00 PM">Noon (12:00 PM - 02:00 PM)</option>
+                                        <option value="02:00 PM - 04:00 PM">Afternoon (02:00 PM - 04:00 PM)</option>
+                                        <option value="05:00 PM - 07:00 PM">Evening (05:00 PM - 07:00 PM)</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group form-group-full">
+                                    <label for="message" class="form-label">Attendant Message or Symptoms (Optional)</label>
+                                    <textarea id="message" class="form-control" placeholder="Write any medical history or symptoms..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Wizard control action buttons -->
+                        <div class="form-wizard-buttons">
+                            <button type="button" class="btn-wizard-nav prev btn-wizard-prev"><i class="fa-solid fa-arrow-left"></i> Previous Step</button>
+                            <button type="button" class="btn-wizard-nav next btn-wizard-next">Next Step <i class="fa-solid fa-arrow-right"></i></button>
+                            <button type="submit" class="btn-wizard-nav submit btn-wizard-submit" style="display: none;">Confirm Booking <i class="fa-solid fa-circle-check"></i></button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Visual Success Card (Hidden initially) -->
+                <div class="appointment-form-content booking-success-message" id="booking-success-container" style="display: none;">
+                    <div class="success-icon-wrapper"><i class="fa-solid fa-circle-check"></i></div>
+                    <h3 class="success-title">Appointment Confirmed!</h3>
+                    <p class="success-desc">We have registered your slot. Please carry your medical history documents and TPA cards during your clinic visit.</p>
+                    
+                    <div class="success-summary">
+                        <div class="summary-item"><span class="summary-label">Booking ID:</span> <span class="summary-value" id="summary-booking-id">-</span></div>
+                        <div class="summary-item"><span class="summary-label">Patient:</span> <span class="summary-value" id="summary-patient-name">-</span></div>
+                        <div class="summary-item"><span class="summary-label">Phone:</span> <span class="summary-value" id="summary-phone">-</span></div>
+                        <div class="summary-item"><span class="summary-label">Department:</span> <span class="summary-value" id="summary-department">-</span></div>
+                        <div class="summary-item"><span class="summary-label">Doctor:</span> <span class="summary-value" id="summary-doctor">-</span></div>
+                        <div class="summary-item"><span class="summary-label">Date:</span> <span class="summary-value" id="summary-date">-</span></div>
+                        <div class="summary-item"><span class="summary-label">Time Slot:</span> <span class="summary-value" id="summary-time">-</span></div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 16px; justify-content: center;">
+                        <button onclick="window.print();" class="btn btn-secondary">Print Confirmation <i class="fa-solid fa-print"></i></button>
+                        <a href="index.html" class="btn btn-primary">Go to Homepage <i class="fa-solid fa-house"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 24x7 EMERGENCY CALL TO ACTION BANNER -->
+    <section class="emergency-banner-section">
+        <div class="container">
+            <div class="emergency-banner-wrapper scroll-reveal">
+                <span class="emergency-banner-tag">24x7 Critical Support</span>
+                <h2 class="emergency-banner-title">Need Immediate Medical Attention?</h2>
+                <p class="emergency-banner-desc">Our emergency ambulance and surgical critical staff are alert and active around the clock. Connect instantly to secure immediate help.</p>
+                <div class="emergency-call-bar">
+                    <a href="tel:+917552642960" class="btn btn-emergency"><i class="fa-solid fa-phone-flip"></i> Call Ambulance</a>
+                    <span class="emergency-call-number">Hotline: <span>+91 755 264 2960</span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-col footer-col-brand">
+                    <a href="index.html" class="logo-container">
+                        <div class="logo-icon-wrapper">
+                            <i class="fa-solid fa-house-chimney-medical"></i>
+                        </div>
+                        <div class="logo-text">
+                            <span class="logo-title">KISHNANI</span>
+                            <span class="logo-subtitle">HOSPITAL</span>
+                        </div>
+                    </a>
+                    <p class="footer-brand-desc">Delivering advanced clinical diagnostic expertise, critical modular OT capabilities, and medical care services in Bairagarh, Bhopal since 2001.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="social-link" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="social-link" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="departments.html">Departments</a></li>
+                        <li><a href="doctors.html">Our Doctors</a></li>
+                        <li><a href="facilities.html">Facilities</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Contact Info</h4>
+                    <ul class="footer-contact-list">
+                        <li>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>Sant Hirdaram Ki Kutiya Ke Samne, Main Road Bairagarh, Bhopal, Madhya Pradesh 462030, India</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-phone"></i>
+                            <span>+91 755 264 2960</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>info@kishnanihospital.com</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-clock"></i>
+                            <span>Open 24/7 (Emergency Wards)</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Directions</h4>
+                    <span style="font-size: 0.85rem; color: #94A3B8;">Landmark: Behind Herdev Hospital, Opposite Sant Hirdaram Kutiya.</span>
+                    <div class="footer-map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3665.4988771146747!2d77.3400588!3d23.2612999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397c69992f58e4cf%3A0xe5a3eb8749a21fe!2sKishnani%20Hospital!5e0!3m2!1sen!2sin!4v1716300000000!5m2!1sen!2sin" loading="lazy" referrerpolicy="no-referrer-when-downgrade" aria-label="Kishnani Hospital Location Google Map"></iframe>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Kishnani Hospital. All Rights Reserved. Designed with Luxury Healthcare Aesthetic.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- FLOATING WIDGETS -->
+    <div class="floating-widgets">
+        <a href="tel:+917552642960" class="float-btn float-emergency" aria-label="Direct Hotline Call"><i class="fa-solid fa-phone"></i></a>
+        <a href="https://wa.me/917552642960?text=Hello%20Kishnani%20Hospital,%20I%20would%20like%20to%20inquire%20about%20booking%20an%20appointment." target="_blank" class="float-btn float-whatsapp" aria-label="WhatsApp Support"><i class="fa-brands fa-whatsapp"></i></a>
+    </div>
+
+    <!-- JAVASCRIPT ANIMATIONS & WIZARD ENGINE -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/appointment.js"></script>
+</body>
+</html>

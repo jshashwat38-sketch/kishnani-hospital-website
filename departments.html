@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Departments & Specialities | Kishnani Hospital Bhopal</title>
+    
+    <meta name="description" content="Explore the 12 medical departments at Kishnani Hospital. Get access to General Surgery, Gynecology, Pediatrics, Cardiology, Pathology, and 24x7 ICU Care.">
+    <meta name="keywords" content="Clinical Departments Bhopal, Surgical units Bairagarh, Diagnostics pathology Bhopal, Gynecology care Bhopal, Cardiology Bairagarh">
+    
+    <link rel="icon" type="image/png" href="images/favicon.png" onerror="this.href='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%2300A896%22><path d=%22M19 10.5h-5.5V5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v5.5H5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5h5.5V19c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-5.5H19c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5z%22/></svg>'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <style>
+        .page-hero {
+            background: linear-gradient(rgba(10, 34, 64, 0.8), rgba(10, 34, 64, 0.9)), url('images/hero_banner.png') no-repeat center center/cover;
+            padding: 120px 0 60px 0;
+            color: var(--text-light);
+            text-align: center;
+        }
+        .page-hero h1 {
+            color: var(--text-light);
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+        .breadcrumbs {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            color: #94A3B8;
+        }
+        .breadcrumbs a {
+            color: var(--secondary);
+            margin: 0 5px;
+        }
+        
+        .speciality-detailed-card {
+            background: var(--bg-primary);
+            border-radius: var(--border-radius-md);
+            padding: 35px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(10, 34, 64, 0.02);
+            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 30px;
+            align-items: start;
+            transition: var(--transition-smooth);
+        }
+        
+        .speciality-detailed-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+            border-color: rgba(0, 168, 150, 0.1);
+        }
+        
+        .spec-icon-holder {
+            width: 70px;
+            height: 70px;
+            border-radius: var(--border-radius-sm);
+            background: rgba(0, 168, 150, 0.08);
+            color: var(--secondary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.2rem;
+        }
+        
+        .speciality-detailed-card:hover .spec-icon-holder {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: var(--text-light);
+        }
+        
+        .spec-details-content h3 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .spec-details-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        .spec-sub-features {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .spec-feat-badge {
+            background-color: var(--bg-secondary);
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .spec-feat-badge i {
+            color: var(--secondary);
+        }
+        
+        @media (max-width: 768px) {
+            .speciality-detailed-card {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PRELOADER HEARTBEAT SCREEN -->
+    <div class="preloader" id="preloader">
+        <div class="heartbeat-loader">
+            <div class="loader-circle"></div>
+            <i class="fa-solid fa-heart-pulse heart-icon"></i>
+        </div>
+        <span class="preloader-text">Kishnani Hospital</span>
+    </div>
+
+    <!-- Sticky Navbar -->
+    <header class="header-wrapper" id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo-container">
+                    <div class="logo-icon-wrapper">
+                        <i class="fa-solid fa-house-chimney-medical"></i>
+                    </div>
+                    <div class="logo-text">
+                        <span class="logo-title">KISHNANI</span>
+                        <span class="logo-subtitle">HOSPITAL</span>
+                    </div>
+                </a>
+                
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+                    <li class="nav-item dropdown"><a href="departments.html" class="nav-link active dropdown-trigger">Departments <i class="fa-solid fa-chevron-down dropdown-icon"></i></a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item"><a href="departments.html?dept=General Medicine">General Medicine</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Gynecology">Gynecology</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Pediatrics">Pediatrics</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Orthopedics">Orthopedics</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Surgery">Surgery</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Cardiology">Cardiology</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a href="doctors.html" class="nav-link">Doctors</a></li>
+                    <li class="nav-item"><a href="facilities.html" class="nav-link">Facilities</a></li>
+                    <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+                
+                <div class="nav-cta">
+                    <a href="appointment.html" class="btn-nav-appointment">Book Appointment</a>
+                </div>
+                
+                <div class="mobile-nav-toggle" id="mobile-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- PAGE HERO HEADER -->
+    <div class="page-hero">
+        <div class="container">
+            <h1>Specialities & Medical Departments</h1>
+            <div class="breadcrumbs">
+                <a href="index.html">Home</a> &gt; <span>Departments</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- DEPARTMENTS EXPANSIVE SECTION -->
+    <section id="departments-list">
+        <div class="container">
+            <div class="section-title-wrapper scroll-reveal">
+                <span class="section-tag">Clinical Competencies</span>
+                <h2 class="section-title">Our <span>12 Specialty Wards</span></h2>
+                <p class="section-desc">Kishnani Hospital is structured into highly integrated medical units, ensuring premium clinical support for simple health checks and critical emergencies alike.</p>
+            </div>
+            
+            <div class="scroll-reveal">
+                <!-- 1. General Medicine -->
+                <div class="speciality-detailed-card" id="medicine">
+                    <div class="spec-icon-holder"><i class="fa-solid fa-stethoscope"></i></div>
+                    <div class="spec-details-content">
+                        <h3>General Medicine</h3>
+                        <p>Our internal medicine physicians handle adult medical diagnosis, metabolic disorders management, immunizations, and preventive full body health checks. We provide continuous support for hypertension, clinical infections, and thyroid diseases.</p>
+                        <div class="spec-sub-features">
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> High Blood Pressure Support</span>
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Infection Screenings</span>
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Lifestyle Disease Guidance</span>
+                        </div>
+                        <a href="appointment.html?dept=General Medicine" class="btn btn-primary">Schedule Consultation</a>
+                    </div>
+                </div>
+                
+                <!-- 2. Gynecology -->
+                <div class="speciality-detailed-card" id="gynecology">
+                    <div class="spec-icon-holder"><i class="fa-solid fa-baby"></i></div>
+                    <div class="spec-details-content">
+                        <h3>Gynecology & Obstetrics</h3>
+                        <p>Providing pristine maternity care, painless child delivery modules, maternal fetal support, ovarian cysts diagnosis, and comprehensive family planning services in highly sterile recovery settings.</p>
+                        <div class="spec-sub-features">
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Painless Deliveries</span>
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Prenatal Classes</span>
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Advanced Fetal Ultrasound</span>
+                        </div>
+                        <a href="appointment.html?dept=Gynecology" class="btn btn-primary">Schedule Consultation</a>
+                    </div>
+                </div>
+                
+                <!-- 3. Pediatrics -->
+                <div class="speciality-detailed-card" id="pediatrics">
+                    <div class="spec-icon-holder"><i class="fa-solid fa-children"></i></div>
+                    <div class="spec-details-content">
+                        <h3>Pediatrics</h3>
+                        <p>Caring for infants, children, and adolescents. Our pediatrics wing covers pediatric critical diagnosis, child vaccinations, growth milestone tracing, and pediatric critical ward panels.</p>
+                        <div class="spec-sub-features">
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Child Immunizations</span>
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Growth Milestones Tracing</span>
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Pediatric Wards</span>
+                        </div>
+                        <a href="appointment.html?dept=Pediatrics" class="btn btn-primary">Schedule Consultation</a>
+                    </div>
+                </div>
+                
+                <!-- 4. Orthopedics -->
+                <div class="speciality-detailed-card" id="orthopedics">
+                    <div class="spec-icon-holder"><i class="fa-solid fa-bone"></i></div>
+                    <div class="spec-details-content">
+                        <h3>Orthopedics & Joint Care</h3>
+                        <p>Accident trauma settings, fracture reduction, joint replacements (hip & knee replacement), spine support clinics, and physiotherapy modules to restore swift movement safely.</p>
+                        <div class="spec-sub-features">
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Joint Replacement</span>
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Fracture Reductions</span>
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Physiotherapy Support</span>
+                        </div>
+                        <a href="appointment.html?dept=Orthopedics" class="btn btn-primary">Schedule Consultation</a>
+                    </div>
+                </div>
+                
+                <!-- 5. General Surgery -->
+                <div class="speciality-detailed-card" id="surgery">
+                    <div class="spec-icon-holder"><i class="fa-solid fa-user-doctor"></i></div>
+                    <div class="spec-details-content">
+                        <h3>General & Laparoscopic Surgery</h3>
+                        <p>Conducted in modular OTs, we perform open and keyhole laparoscopic surgeries for appendix removal, hernia treatments, gallbladder stones, pile treatments, and complex soft tissue excisions under skilled surgeons.</p>
+                        <div class="spec-sub-features">
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Laparoscopic Keyhole OT</span>
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Hernia & Appendix Removal</span>
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Post-Operative Ward Care</span>
+                        </div>
+                        <a href="appointment.html?dept=Surgery" class="btn btn-primary">Schedule Consultation</a>
+                    </div>
+                </div>
+                
+                <!-- 6. Emergency Care -->
+                <div class="speciality-detailed-card" id="emergency">
+                    <div class="spec-icon-holder"><i class="fa-solid fa-house-medical-emergency"></i></div>
+                    <div class="spec-details-content">
+                        <h3>Emergency Care (24x7)</h3>
+                        <p>Equipped with ambulance panels and clinical doctors, our critical emergency trauma bay handles heart strokes, clinical seizures, poisoning, and severe physical accidents flawlessly.</p>
+                        <div class="spec-sub-features">
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Round-the-clock Ambulance</span>
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Acute Trauma Management</span>
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> On-call Surgeons 24/7</span>
+                        </div>
+                        <a href="tel:+917552642960" class="btn btn-emergency"><i class="fa-solid fa-phone"></i> Direct Emergency Call</a>
+                    </div>
+                </div>
+                
+                <!-- 7. ICU & Critical Care -->
+                <div class="speciality-detailed-card" id="icu">
+                    <div class="spec-icon-holder"><i class="fa-solid fa-heart-pulse"></i></div>
+                    <div class="spec-details-content">
+                        <h3>ICU & Critical Care</h3>
+                        <p>Equipped with digital patient monitors, cardiac defibrillators, oxygen supplies, and digital ventilators. Monitored closely under senior specialists for postoperative and high-risk patients.</p>
+                        <div class="spec-sub-features">
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Digital Monitors & Oxygen</span>
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> High-end Ventilators</span>
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Dedicated Critical Nurses</span>
+                        </div>
+                        <a href="appointment.html?dept=ICU" class="btn btn-primary">Inquire Ward Info</a>
+                    </div>
+                </div>
+                
+                <!-- 8. Diagnostics -->
+                <div class="speciality-detailed-card" id="diagnostics">
+                    <div class="spec-icon-holder"><i class="fa-solid fa-mobile-screen"></i></div>
+                    <div class="spec-details-content">
+                        <h3>Digital Diagnostics</h3>
+                        <p>Features state-of-the-art diagnostic imaging including high-resolution ultrasound scans, digital X-rays, ECG tracings, and specialized fetal heart monitoring units.</p>
+                        <div class="spec-sub-features">
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Digital High-Res X-Ray</span>
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Ultrasound Scans</span>
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Immediate Diagnostic Prints</span>
+                        </div>
+                        <a href="appointment.html?dept=Diagnostics" class="btn btn-primary">Book Diagnostic Scan</a>
+                    </div>
+                </div>
+                
+                <!-- 9. Pathology -->
+                <div class="speciality-detailed-card" id="pathology">
+                    <div class="spec-icon-holder"><i class="fa-solid fa-microscope"></i></div>
+                    <div class="spec-details-content">
+                        <h3>Pathology Lab</h3>
+                        <p>Fully functional internal clinical biochemistry lab processing blood sugar counts, CBC, lipid profiles, liver function panels, culture tests, and urine panels with fast, reliable reports.</p>
+                        <div class="spec-sub-features">
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Fast Hematology & CBC</span>
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Biochemistry Lipid Scans</span>
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Urine & Infection Cultures</span>
+                        </div>
+                        <a href="appointment.html?dept=Pathology" class="btn btn-primary">Schedule Blood Test</a>
+                    </div>
+                </div>
+                
+                <!-- 10. ENT -->
+                <div class="speciality-detailed-card" id="ent">
+                    <div class="spec-icon-holder"><i class="fa-solid fa-ear-deaf"></i></div>
+                    <div class="spec-details-content">
+                        <h3>ENT Care</h3>
+                        <p>Providing specialized clinics for ear infections, sinus pain, nasal bone alignments, throat throat infections, hearing tests, and quick outpatient ENT minor procedures.</p>
+                        <div class="spec-sub-features">
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Ear & Sinus Infection Relief</span>
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Nasal Alignment Consults</span>
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Otitis Media Care</span>
+                        </div>
+                        <a href="appointment.html?dept=ENT" class="btn btn-primary">Schedule Consultation</a>
+                    </div>
+                </div>
+                
+                <!-- 11. Cardiology -->
+                <div class="speciality-detailed-card" id="cardiology">
+                    <div class="spec-icon-holder"><i class="fa-solid fa-heart-circle-check"></i></div>
+                    <div class="spec-details-content">
+                        <h3>Cardiology (Consultation)</h3>
+                        <p>Focused on coronary protection. We provide clinical screening for chest pain, hypertension monitoring, regular ECG tracking, blood pressure adjustments, and cardiology support.</p>
+                        <div class="spec-sub-features">
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Chest Pain Screening</span>
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Digital ECG Scan</span>
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Vascular Hypertension Check</span>
+                        </div>
+                        <a href="appointment.html?dept=Cardiology" class="btn btn-primary">Schedule Consultation</a>
+                    </div>
+                </div>
+                
+                <!-- 12. Diabetes Care -->
+                <div class="speciality-detailed-card" id="diabetes">
+                    <div class="spec-icon-holder"><i class="fa-solid fa-hand-holding-droplet"></i></div>
+                    <div class="spec-details-content">
+                        <h3>Diabetes Care</h3>
+                        <p>Specialized diabetes support clinics focusing on HbA1c glucose counts, diabetic neuropathic care, custom insulin doses adjustments, diabetic food plans, and diabetic retinopathy prevention guides.</p>
+                        <div class="spec-sub-features">
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> HbA1c Sugar Profiling</span>
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Diabetic Foot Screenings</span>
+                            <span class="spec-feat-badge"><i class="fa-solid fa-circle-check"></i> Preventive Insulin Doses Adjust</span>
+                        </div>
+                        <a href="appointment.html?dept=Diabetes Care" class="btn btn-primary">Schedule Consultation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 24x7 EMERGENCY CALL TO ACTION BANNER -->
+    <section class="emergency-banner-section">
+        <div class="container">
+            <div class="emergency-banner-wrapper scroll-reveal">
+                <span class="emergency-banner-tag">24x7 Critical Support</span>
+                <h2 class="emergency-banner-title">Need Immediate Medical Attention?</h2>
+                <p class="emergency-banner-desc">Our emergency ambulance and surgical critical staff are alert and active around the clock. Connect instantly to secure immediate help.</p>
+                <div class="emergency-call-bar">
+                    <a href="tel:+917552642960" class="btn btn-emergency"><i class="fa-solid fa-phone-flip"></i> Call Ambulance</a>
+                    <span class="emergency-call-number">Hotline: <span>+91 755 264 2960</span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-col footer-col-brand">
+                    <a href="index.html" class="logo-container">
+                        <div class="logo-icon-wrapper">
+                            <i class="fa-solid fa-house-chimney-medical"></i>
+                        </div>
+                        <div class="logo-text">
+                            <span class="logo-title">KISHNANI</span>
+                            <span class="logo-subtitle">HOSPITAL</span>
+                        </div>
+                    </a>
+                    <p class="footer-brand-desc">Delivering advanced clinical diagnostic expertise, critical modular OT capabilities, and medical care services in Bairagarh, Bhopal since 2001.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="social-link" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="social-link" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="departments.html">Departments</a></li>
+                        <li><a href="doctors.html">Our Doctors</a></li>
+                        <li><a href="facilities.html">Facilities</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Contact Info</h4>
+                    <ul class="footer-contact-list">
+                        <li>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>Sant Hirdaram Ki Kutiya Ke Samne, Main Road Bairagarh, Bhopal, Madhya Pradesh 462030, India</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-phone"></i>
+                            <span>+91 755 264 2960</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>info@kishnanihospital.com</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-clock"></i>
+                            <span>Open 24/7 (Emergency Wards)</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Directions</h4>
+                    <span style="font-size: 0.85rem; color: #94A3B8;">Landmark: Behind Herdev Hospital, Opposite Sant Hirdaram Kutiya.</span>
+                    <div class="footer-map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3665.4988771146747!2d77.3400588!3d23.2612999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397c69992f58e4cf%3A0xe5a3eb8749a21fe!2sKishnani%20Hospital!5e0!3m2!1sen!2sin!4v1716300000000!5m2!1sen!2sin" loading="lazy" referrerpolicy="no-referrer-when-downgrade" aria-label="Kishnani Hospital Location Google Map"></iframe>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Kishnani Hospital. All Rights Reserved. Designed with Luxury Healthcare Aesthetic.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- FLOATING WIDGETS -->
+    <div class="floating-widgets">
+        <a href="tel:+917552642960" class="float-btn float-emergency" aria-label="Direct Hotline Call"><i class="fa-solid fa-phone"></i></a>
+        <a href="https://wa.me/917552642960?text=Hello%20Kishnani%20Hospital,%20I%20would%20like%20to%20inquire%20about%20booking%20an%20appointment." target="_blank" class="float-btn float-whatsapp" aria-label="WhatsApp Support"><i class="fa-brands fa-whatsapp"></i></a>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

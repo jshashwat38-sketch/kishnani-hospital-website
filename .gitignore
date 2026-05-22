@@ -1,0 +1,17 @@
+# System / OS
+Thumbs.db
+.DS_Store
+
+# IDE / Editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Gemini / Antigravity Agent logs and directories
+.gemini/
+brain/
+scratch/

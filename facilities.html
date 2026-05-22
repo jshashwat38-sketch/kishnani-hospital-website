@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facilities & Infrastructure | Kishnani Hospital Bhopal</title>
+    
+    <meta name="description" content="Discover our modern clinical facilities at Kishnani Hospital Bairagarh. Explore our modular OT, ICU, in-house pathology lab, and 24x7 cashless insurance panels.">
+    <meta name="keywords" content="Hospital infrastructure Bhopal, Modular OT Bairagarh, Cashless insurance hospital Bhopal, ICU beds Bairagarh, Diagnostics pathology">
+    
+    <link rel="icon" type="image/png" href="images/favicon.png" onerror="this.href='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%2300A896%22><path d=%22M19 10.5h-5.5V5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v5.5H5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5h5.5V19c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-5.5H19c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5z%22/></svg>'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <style>
+        .page-hero {
+            background: linear-gradient(rgba(10, 34, 64, 0.8), rgba(10, 34, 64, 0.9)), url('images/hero_banner.png') no-repeat center center/cover;
+            padding: 120px 0 60px 0;
+            color: var(--text-light);
+            text-align: center;
+        }
+        .page-hero h1 {
+            color: var(--text-light);
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+        .breadcrumbs {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            color: #94A3B8;
+        }
+        .breadcrumbs a {
+            color: var(--secondary);
+            margin: 0 5px;
+        }
+        
+        .facility-detailed-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            margin-bottom: 80px;
+        }
+        .facility-detailed-row:nth-child(even) {
+            direction: rtl;
+        }
+        .facility-detailed-row:nth-child(even) .facility-text-block {
+            direction: ltr;
+        }
+        .facility-img-block {
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+            border: 4px solid var(--bg-primary);
+            height: 340px;
+        }
+        .facility-img-block img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .facility-text-block span {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--secondary);
+            letter-spacing: 2px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+        .facility-text-block h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+        .facility-text-block p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        
+        /* Cashless guide cards */
+        .cashless-step-card {
+            background: var(--bg-primary);
+            border-radius: var(--border-radius-md);
+            padding: 24px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(10, 34, 64, 0.02);
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .facility-detailed-row {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                margin-bottom: 50px;
+            }
+            .facility-detailed-row:nth-child(even) {
+                direction: ltr;
+            }
+            .facility-img-block {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PRELOADER HEARTBEAT SCREEN -->
+    <div class="preloader" id="preloader">
+        <div class="heartbeat-loader">
+            <div class="loader-circle"></div>
+            <i class="fa-solid fa-heart-pulse heart-icon"></i>
+        </div>
+        <span class="preloader-text">Kishnani Hospital</span>
+    </div>
+
+    <!-- Sticky Navbar -->
+    <header class="header-wrapper" id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo-container">
+                    <div class="logo-icon-wrapper">
+                        <i class="fa-solid fa-house-chimney-medical"></i>
+                    </div>
+                    <div class="logo-text">
+                        <span class="logo-title">KISHNANI</span>
+                        <span class="logo-subtitle">HOSPITAL</span>
+                    </div>
+                </a>
+                
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+                    <li class="nav-item dropdown">
+                        <a href="departments.html" class="nav-link dropdown-trigger">Departments <i class="fa-solid fa-chevron-down dropdown-icon"></i></a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item"><a href="departments.html?dept=General Medicine">General Medicine</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Gynecology">Gynecology</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Pediatrics">Pediatrics</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Orthopedics">Orthopedics</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Surgery">Surgery</a></li>
+                            <li class="dropdown-item"><a href="departments.html?dept=Cardiology">Cardiology</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a href="doctors.html" class="nav-link">Doctors</a></li>
+                    <li class="nav-item"><a href="facilities.html" class="nav-link active">Facilities</a></li>
+                    <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+                
+                <div class="nav-cta">
+                    <a href="appointment.html" class="btn-nav-appointment">Book Appointment</a>
+                </div>
+                
+                <div class="mobile-nav-toggle" id="mobile-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- PAGE HERO HEADER -->
+    <div class="page-hero">
+        <div class="container">
+            <h1>Infrastructure & Critical Wards</h1>
+            <div class="breadcrumbs">
+                <a href="index.html">Home</a> &gt; <span>Facilities</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- FACILITIES ROWS DETAILS -->
+    <section id="detailed-facilities">
+        <div class="container">
+            <div class="section-title-wrapper scroll-reveal">
+                <span class="section-tag">Modern Infrastructure</span>
+                <h2 class="section-title">Built for <span>Healing & Safety</span></h2>
+                <p class="section-desc">We keep our medical environment clean, secure, and technologically advanced, matching global guidelines for inpatient ward recoveries.</p>
+            </div>
+            
+            <div class="scroll-reveal">
+                <!-- ICU -->
+                <div class="facility-detailed-row">
+                    <div class="facility-img-block">
+                        <img src="images/modern_icu.png" alt="Advanced Multi-parameter ICU Ward at Kishnani Hospital">
+                    </div>
+                    <div class="facility-text-block">
+                        <span>Intensive Wards</span>
+                        <h3>Intensive Care Unit (ICU)</h3>
+                        <p>Our Intensive Care Unit is staffed with specialized critical care nurses and round-the-clock clinical doctors. Equipped with multi-channel vitals monitors, high-frequency digital ventilators, continuous oxygen supply manifolds, and standard cardiac defibrillators to stabilize high-risk surgical cases seamlessly.</p>
+                        <div class="about-feat-item" style="margin-bottom: 10px;"><i class="fa-solid fa-check" style="color: var(--secondary);"></i> <span>Round-the-clock Vitals Monitoring</span></div>
+                        <div class="about-feat-item"><i class="fa-solid fa-check" style="color: var(--secondary);"></i> <span>Advanced Medical Ventilators</span></div>
+                    </div>
+                </div>
+                
+                <!-- Modular OT -->
+                <div class="facility-detailed-row">
+                    <div class="facility-img-block">
+                        <img src="images/operation_theatre.png" alt="Modular Sterile Surgical Suite Operation Theatre at Kishnani Hospital">
+                    </div>
+                    <div class="facility-text-block">
+                        <span>Surgical Precision</span>
+                        <h3>Modular Operation Theatre</h3>
+                        <p>Constructed utilizing seamless joint-free wall paneling and shadowless overhead surgical lighting domes, our operating suites maintain a spotless sterile medical grade environment. Fully equipped with modern laparoscopic towers and pediatric surgical tools to deliver pristine, safe operative recoveries.</p>
+                        <div class="about-feat-item" style="margin-bottom: 10px;"><i class="fa-solid fa-check" style="color: var(--secondary);"></i> <span>Laparoscopic & Open Surgeries</span></div>
+                        <div class="about-feat-item"><i class="fa-solid fa-check" style="color: var(--secondary);"></i> <span>Pristine Infection Control Systems</span></div>
+                    </div>
+                </div>
+                
+                <!-- Digital Lab -->
+                <div class="facility-detailed-row">
+                    <div class="facility-img-block">
+                        <img src="images/diagnostic_lab.png" alt="Digital Pathology diagnostics laboratory at Kishnani Hospital">
+                    </div>
+                    <div class="facility-text-block">
+                        <span>Digital Testing</span>
+                        <h3>Pathology Lab & Diagnostics</h3>
+                        <p>Our internal diagnostic diagnostics and pathology center handles CBC profiling, blood lipid panels, metabolic screening, urine analysis, and liver-kidney scans daily. Using high-precision biochemistry analytical tools, we produce digital reports rapidly to fast-track clinical decision making.</p>
+                        <div class="about-feat-item" style="margin-bottom: 10px;"><i class="fa-solid fa-check" style="color: var(--secondary);"></i> <span>Digital X-Ray & Ultrasound Scans</span></div>
+                        <div class="about-feat-item"><i class="fa-solid fa-check" style="color: var(--secondary);"></i> <span>Fast, Precise Biochemistry Scans</span></div>
+                    </div>
+                </div>
+                
+                <!-- Reception Lobby -->
+                <div class="facility-detailed-row">
+                    <div class="facility-img-block">
+                        <img src="images/hospital_reception.png" alt="Warm Hospital Reception Waiting Lobby at Kishnani Hospital Bairagarh">
+                    </div>
+                    <div class="facility-text-block">
+                        <span>Welcoming Care</span>
+                        <h3>Inpatient Rooms & Lounges</h3>
+                        <p>We supply private, semi-private, and general medical ward rooms with climate controls and nurse call panels. The warm wood-clad glassmorphism reception lounge is designed to reduce stress, providing patients and their families with comfortable seating, water stations, and helpful guides.</p>
+                        <div class="about-feat-item" style="margin-bottom: 10px;"><i class="fa-solid fa-check" style="color: var(--secondary);"></i> <span>Comfortable, climate-controlled Ward Beds</span></div>
+                        <div class="about-feat-item"><i class="fa-solid fa-check" style="color: var(--secondary);"></i> <span>24/7 Outpatient Pharmacy & Ambulance Fleet</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CASHLESS INSURANCE TRANSPARENCY SECTION -->
+    <section class="section-bg-alt" id="cashless-guide">
+        <div class="container">
+            <div class="section-title-wrapper scroll-reveal">
+                <span class="section-tag">Insurance Claims</span>
+                <h2 class="section-title">Cashless <span>TPA Admission Guide</span></h2>
+                <p class="section-desc">Kishnani Hospital partners with all major Third-Party Administrators (TPAs) to settle hospitalization expenses cleanly. Follow this simple process.</p>
+            </div>
+            
+            <div class="specialities-grid grid-reveal">
+                <div class="cashless-step-card">
+                    <div class="icon-box icon-box-secondary" style="margin: 0 auto 20px auto;"><i class="fa-solid fa-id-card"></i></div>
+                    <h4 style="font-family: 'Poppins', sans-serif; color: var(--primary); margin-bottom: 10px; font-weight: 600;">1. ID Submission</h4>
+                    <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">Provide your TPA Health Card and Aadhaar/PAN ID at our admission desk during check-in.</p>
+                </div>
+                
+                <div class="cashless-step-card">
+                    <div class="icon-box icon-box-secondary" style="margin: 0 auto 20px auto;"><i class="fa-solid fa-file-medical"></i></div>
+                    <h4 style="font-family: 'Poppins', sans-serif; color: var(--primary); margin-bottom: 10px; font-weight: 600;">2. Form Prefill</h4>
+                    <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">Our in-house TPA coordinator pre-fills the cashless pre-auth papers detailing your diagnosis.</p>
+                </div>
+                
+                <div class="cashless-step-card">
+                    <div class="icon-box icon-box-secondary" style="margin: 0 auto 20px auto;"><i class="fa-solid fa-paper-plane"></i></div>
+                    <h4 style="font-family: 'Poppins', sans-serif; color: var(--primary); margin-bottom: 10px; font-weight: 600;">3. Fast Approval</h4>
+                    <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">We securely transmit claims to your insurer for quick, seamless initial credit approvals within hours.</p>
+                </div>
+                
+                <div class="cashless-step-card">
+                    <div class="icon-box icon-box-secondary" style="margin: 0 auto 20px auto;"><i class="fa-solid fa-handshake-simple"></i></div>
+                    <h4 style="font-family: 'Poppins', sans-serif; color: var(--primary); margin-bottom: 10px; font-weight: 600;">4. Clean Discharge</h4>
+                    <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">Discharge smoothly once final medical bills are approved directly by the insurance carrier.</p>
+                </div>
+            </div>
+            
+            <!-- Logo Scrolling panel -->
+            <div class="insurance-partners scroll-reveal" style="padding-bottom: 0;">
+                <h3 class="insurance-title" style="margin-bottom: 20px;">Participating Insurance Brands</h3>
+                <div class="insurance-slider">
+                    <div class="insurance-track">
+                        <span class="insurance-logo-item"><i class="fa-solid fa-shield-halved"></i> Star Health Insurance</span>
+                        <span class="insurance-logo-item"><i class="fa-solid fa-shield-halved"></i> HDFC Ergo</span>
+                        <span class="insurance-logo-item"><i class="fa-solid fa-shield-halved"></i> ICICI Lombard</span>
+                        <span class="insurance-logo-item"><i class="fa-solid fa-shield-halved"></i> Bajaj Allianz</span>
+                        <span class="insurance-logo-item"><i class="fa-solid fa-shield-halved"></i> Niva Bupa</span>
+                        <span class="insurance-logo-item"><i class="fa-solid fa-shield-halved"></i> Star Health Insurance</span>
+                        <span class="insurance-logo-item"><i class="fa-solid fa-shield-halved"></i> HDFC Ergo</span>
+                        <span class="insurance-logo-item"><i class="fa-solid fa-shield-halved"></i> ICICI Lombard</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 24x7 EMERGENCY CALL TO ACTION BANNER -->
+    <section class="emergency-banner-section">
+        <div class="container">
+            <div class="emergency-banner-wrapper scroll-reveal">
+                <span class="emergency-banner-tag">24x7 Critical Support</span>
+                <h2 class="emergency-banner-title">Need Immediate Medical Attention?</h2>
+                <p class="emergency-banner-desc">Our emergency ambulance and surgical critical staff are alert and active around the clock. Connect instantly to secure immediate help.</p>
+                <div class="emergency-call-bar">
+                    <a href="tel:+917552642960" class="btn btn-emergency"><i class="fa-solid fa-phone-flip"></i> Call Ambulance</a>
+                    <span class="emergency-call-number">Hotline: <span>+91 755 264 2960</span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-col footer-col-brand">
+                    <a href="index.html" class="logo-container">
+                        <div class="logo-icon-wrapper">
+                            <i class="fa-solid fa-house-chimney-medical"></i>
+                        </div>
+                        <div class="logo-text">
+                            <span class="logo-title">KISHNANI</span>
+                            <span class="logo-subtitle">HOSPITAL</span>
+                        </div>
+                    </a>
+                    <p class="footer-brand-desc">Delivering advanced clinical diagnostic expertise, critical modular OT capabilities, and medical care services in Bairagarh, Bhopal since 2001.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="social-link" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="social-link" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="departments.html">Departments</a></li>
+                        <li><a href="doctors.html">Our Doctors</a></li>
+                        <li><a href="facilities.html">Facilities</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Contact Info</h4>
+                    <ul class="footer-contact-list">
+                        <li>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>Sant Hirdaram Ki Kutiya Ke Samne, Main Road Bairagarh, Bhopal, Madhya Pradesh 462030, India</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-phone"></i>
+                            <span>+91 755 264 2960</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>info@kishnanihospital.com</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-clock"></i>
+                            <span>Open 24/7 (Emergency Wards)</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Directions</h4>
+                    <span style="font-size: 0.85rem; color: #94A3B8;">Landmark: Behind Herdev Hospital, Opposite Sant Hirdaram Kutiya.</span>
+                    <div class="footer-map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3665.4988771146747!2d77.3400588!3d23.2612999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397c69992f58e4cf%3A0xe5a3eb8749a21fe!2sKishnani%20Hospital!5e0!3m2!1sen!2sin!4v1716300000000!5m2!1sen!2sin" loading="lazy" referrerpolicy="no-referrer-when-downgrade" aria-label="Kishnani Hospital Location Google Map"></iframe>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Kishnani Hospital. All Rights Reserved. Designed with Luxury Healthcare Aesthetic.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- FLOATING WIDGETS -->
+    <div class="floating-widgets">
+        <a href="tel:+917552642960" class="float-btn float-emergency" aria-label="Direct Hotline Call"><i class="fa-solid fa-phone"></i></a>
+        <a href="https://wa.me/917552642960?text=Hello%20Kishnani%20Hospital,%20I%20would%20like%20to%20inquire%20about%20booking%20an%20appointment." target="_blank" class="float-btn float-whatsapp" aria-label="WhatsApp Support"><i class="fa-brands fa-whatsapp"></i></a>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
