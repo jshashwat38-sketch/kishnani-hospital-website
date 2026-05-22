@@ -360,6 +360,38 @@ const INITIAL_DATA: DatabaseSchema = {
   ]
 };
 
+function normalizeRow(table: string, r: any): any {
+  if (!r) return null;
+  const copy = { ...r };
+  
+  if (table === 'patients') {
+    if (typeof r.bloodgroup !== 'undefined') copy.bloodGroup = r.bloodgroup;
+    if (typeof r.admissiondate !== 'undefined') copy.admissionDate = r.admissiondate;
+  }
+  
+  if (table === 'appointments') {
+    if (typeof r.patientname !== 'undefined') copy.patientName = r.patientname;
+    if (typeof r.doctorname !== 'undefined') copy.doctorName = r.doctorname;
+  }
+  
+  if (table === 'blogs') {
+    if (typeof r.publisheddate !== 'undefined') copy.publishedDate = r.publisheddate;
+    if (typeof r.readtime !== 'undefined') copy.readTime = r.readtime;
+  }
+  
+  if (table === 'testimonials') {
+    if (typeof r.patientname !== 'undefined') copy.patientName = r.patientname;
+  }
+  
+  if (table === 'departments') {
+    if (typeof r.doctorscount !== 'undefined') copy.doctorsCount = Number(r.doctorscount || 0);
+    if (typeof r.patientscount !== 'undefined') copy.patientsCount = Number(r.patientscount || 0);
+    if (typeof r.opdlimit !== 'undefined') copy.opdLimit = Number(r.opdlimit || 0);
+  }
+  
+  return copy;
+}
+
 class DatabaseWrapper {
   private initPromise: Promise<void> | null = null;
 
@@ -622,7 +654,8 @@ class DatabaseWrapper {
       return cmsData;
     }
 
-    const rows = await sql.query(`SELECT * FROM ${table}`);
+    const rawRows = await sql.query(`SELECT * FROM ${table}`);
+    const rows = rawRows.map(r => normalizeRow(table, r));
     
     // Explicit type casts for boolean and arrays from JSONB columns for downstream files
     if (table === 'patients') {
@@ -729,7 +762,7 @@ class DatabaseWrapper {
   public async update<K extends keyof DatabaseSchema>(table: K, id: string, updates: any): Promise<any> {
     await this.ensureInitialized();
     const rows = await sql.query(`SELECT * FROM ${table} WHERE id = $1`, [id]);
-    const row = rows[0];
+    const row = normalizeRow(table, rows[0]);
     if (!row) return null;
 
     const merged = { ...row, ...updates };
