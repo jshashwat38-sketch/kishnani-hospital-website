@@ -361,14 +361,23 @@ const INITIAL_DATA: DatabaseSchema = {
 };
 
 class DatabaseWrapper {
+  private initPromise: Promise<void> | null = null;
+
   constructor() {
     // Background async initialization of the tables and seeds
     if (DATABASE_URL) {
-      this.init().then(() => {
+      this.initPromise = this.init().then(() => {
         console.log("PostgreSQL database tables verified and loaded successfully.");
       }).catch((err) => {
         console.error("PostgreSQL database initialization failed:", err);
+        throw err;
       });
+    }
+  }
+
+  private async ensureInitialized() {
+    if (this.initPromise) {
+      await this.initPromise;
     }
   }
 
@@ -603,6 +612,7 @@ class DatabaseWrapper {
   }
 
   public async get<K extends keyof DatabaseSchema>(table: K): Promise<DatabaseSchema[K]> {
+    await this.ensureInitialized();
     if (table === 'cms') {
       const rows = await sql`SELECT * FROM cms`;
       const cmsData: any = { hero: {}, about: {}, packages: [], emergencyNumbers: [] };
@@ -667,6 +677,7 @@ class DatabaseWrapper {
   }
 
   public async insert<K extends keyof DatabaseSchema>(table: K, record: any): Promise<any> {
+    await this.ensureInitialized();
     const id = record.id || `${table.substring(0, 3).toUpperCase()}-${Date.now()}`;
     const data = { ...record, id };
 
@@ -716,6 +727,7 @@ class DatabaseWrapper {
   }
 
   public async update<K extends keyof DatabaseSchema>(table: K, id: string, updates: any): Promise<any> {
+    await this.ensureInitialized();
     const rows = await (sql as any)(`SELECT * FROM ${table} WHERE id = $1`, [id]);
     const row = rows[0];
     if (!row) return null;
@@ -793,11 +805,13 @@ class DatabaseWrapper {
   }
 
   public async delete<K extends keyof DatabaseSchema>(table: K, id: string): Promise<boolean> {
+    await this.ensureInitialized();
     await (sql as any)(`DELETE FROM ${table} WHERE id = $1`, [id]);
     return true;
   }
 
   public async updateCMS(sectionOrUpdates: string | Partial<CMSData>, optionalUpdates?: any): Promise<CMSData> {
+    await this.ensureInitialized();
     let updates: Partial<CMSData> = {};
     if (typeof sectionOrUpdates === 'string') {
       const section = sectionOrUpdates;
