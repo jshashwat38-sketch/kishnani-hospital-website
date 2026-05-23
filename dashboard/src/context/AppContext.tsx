@@ -25,6 +25,7 @@ export interface Doctor {
   availability: "Available" | "In Surgery" | "On Leave" | "Busy";
   schedule: string;
   leaves: string[];
+  image?: string;
 }
 
 export interface Appointment {

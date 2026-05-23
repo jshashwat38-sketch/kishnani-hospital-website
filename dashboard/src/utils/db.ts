@@ -33,6 +33,7 @@ export interface Doctor {
   availability: "Available" | "In Surgery" | "On Leave" | "Busy";
   schedule: string;
   leaves: string[];
+  image?: string;
 }
 
 export interface Appointment {
@@ -189,12 +190,12 @@ const INITIAL_DATA: DatabaseSchema = {
     }
   ],
   doctors: [
-    { id: "DOC-001", name: "Dr. Lal Kumar Kishnani", specialty: "Chief Physician - General Medicine", dept: "General Medicine", availability: "Available", schedule: "09:00 AM - 02:00 PM", leaves: [] },
-    { id: "DOC-002", name: "Dr. Rajesh Kishnani", specialty: "Chief Surgeon - Laparoscopic Surgery", dept: "Surgery", availability: "In Surgery", schedule: "11:00 AM - 05:00 PM", leaves: [] },
-    { id: "DOC-003", name: "Dr. Anita Sharma", specialty: "Obstetrics & Gynecology Specialist", dept: "Gynecology", availability: "Available", schedule: "10:00 AM - 03:00 PM", leaves: [] },
-    { id: "DOC-004", name: "Dr. Mansi Kishnani", specialty: "Senior Consultant - Ophthalmology", dept: "Ophthalmology", availability: "On Leave", schedule: "09:00 AM - 01:00 PM", leaves: ["2026-05-22"] },
-    { id: "DOC-005", name: "Dr. Sunita Patel", specialty: "Consultant Cardiologist", dept: "Cardiology", availability: "Available", schedule: "12:00 PM - 04:00 PM", leaves: [] },
-    { id: "DOC-006", name: "Dr. Amit Verma", specialty: "Consultant Pediatrician", dept: "Pediatrics", availability: "Available", schedule: "09:00 AM - 01:00 PM", leaves: [] }
+    { id: "DOC-001", name: "Dr. Lal Kumar Kishnani", specialty: "Chief Physician - General Medicine", dept: "General Medicine", availability: "Available", schedule: "09:00 AM - 02:00 PM", leaves: [], image: "images/dr_lal_kishnani.png" },
+    { id: "DOC-002", name: "Dr. Rajesh Kishnani", specialty: "Chief Surgeon - Laparoscopic Surgery", dept: "Surgery", availability: "In Surgery", schedule: "11:00 AM - 05:00 PM", leaves: [], image: "images/dr_rajesh_kishnani.png" },
+    { id: "DOC-003", name: "Dr. Anita Sharma", specialty: "Obstetrics & Gynecology Specialist", dept: "Gynecology", availability: "Available", schedule: "10:00 AM - 03:00 PM", leaves: [], image: "images/dr_anita_sharma.png" },
+    { id: "DOC-004", name: "Dr. Mansi Kishnani", specialty: "Senior Consultant - Ophthalmology", dept: "Ophthalmology", availability: "On Leave", schedule: "09:00 AM - 01:00 PM", leaves: ["2026-05-22"], image: "images/dr_mansi_kishnani.png" },
+    { id: "DOC-005", name: "Dr. Sunita Patel", specialty: "Consultant Cardiologist", dept: "Cardiology", availability: "Available", schedule: "12:00 PM - 04:00 PM", leaves: [], image: "images/dr_sunita_patel.png" },
+    { id: "DOC-006", name: "Dr. Amit Verma", specialty: "Consultant Pediatrician", dept: "Pediatrics", availability: "Available", schedule: "09:00 AM - 01:00 PM", leaves: [], image: "images/dr_amit_verma.png" }
   ],
   appointments: [
     { id: "APT-101", patientName: "Karan Johar", doctorName: "Dr. Lal Kumar Kishnani", date: "2026-05-22", time: "10:00 AM", dept: "General Medicine", status: "Approved", priority: "Routine" },
@@ -440,9 +441,16 @@ class DatabaseWrapper {
         dept VARCHAR(100),
         availability VARCHAR(50),
         schedule VARCHAR(100),
-        leaves JSONB
+        leaves JSONB,
+        image TEXT
       );
     `;
+
+    try {
+      await sql`ALTER TABLE doctors ADD COLUMN IF NOT EXISTS image TEXT;`;
+    } catch (e) {
+      console.log("Image column already exists or alter table not supported");
+    }
 
     await sql`
       CREATE TABLE IF NOT EXISTS appointments (
@@ -554,8 +562,8 @@ class DatabaseWrapper {
     if (doctorsCount === 0) {
       for (const d of INITIAL_DATA.doctors) {
         await sql`
-          INSERT INTO doctors (id, name, specialty, dept, availability, schedule, leaves)
-          VALUES (${d.id}, ${d.name}, ${d.specialty}, ${d.dept}, ${d.availability}, ${d.schedule}, ${JSON.stringify(d.leaves)})
+          INSERT INTO doctors (id, name, specialty, dept, availability, schedule, leaves, image)
+          VALUES (${d.id}, ${d.name}, ${d.specialty}, ${d.dept}, ${d.availability}, ${d.schedule}, ${JSON.stringify(d.leaves)}, ${d.image || ''})
         `;
       }
     }
@@ -721,8 +729,8 @@ class DatabaseWrapper {
       `;
     } else if (table === 'doctors') {
       await sql`
-        INSERT INTO doctors (id, name, specialty, dept, availability, schedule, leaves)
-        VALUES (${data.id}, ${data.name}, ${data.specialty}, ${data.dept}, ${data.availability || 'Available'}, ${data.schedule}, ${JSON.stringify(data.leaves || [])})
+        INSERT INTO doctors (id, name, specialty, dept, availability, schedule, leaves, image)
+        VALUES (${data.id}, ${data.name}, ${data.specialty}, ${data.dept}, ${data.availability || 'Available'}, ${data.schedule}, ${JSON.stringify(data.leaves || [])}, ${data.image || ''})
       `;
     } else if (table === 'appointments') {
       await sql`
@@ -782,7 +790,7 @@ class DatabaseWrapper {
       const leaves = typeof updates.leaves !== 'undefined' ? updates.leaves : (typeof row.leaves === 'string' ? JSON.parse(row.leaves || '[]') : row.leaves);
       await sql`
         UPDATE doctors
-        SET name = ${merged.name}, specialty = ${merged.specialty}, dept = ${merged.dept}, availability = ${merged.availability}, schedule = ${merged.schedule}, leaves = ${JSON.stringify(leaves)}
+        SET name = ${merged.name}, specialty = ${merged.specialty}, dept = ${merged.dept}, availability = ${merged.availability}, schedule = ${merged.schedule}, leaves = ${JSON.stringify(leaves)}, image = ${merged.image || ''}
         WHERE id = ${id}
       `;
       return { ...merged, leaves };

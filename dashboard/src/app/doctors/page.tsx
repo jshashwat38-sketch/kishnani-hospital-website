@@ -29,6 +29,45 @@ export default function DoctorsPage() {
   const [specialty, setSpecialty] = useState("");
   const [dept, setDept] = useState("General Medicine");
   const [schedule, setSchedule] = useState("09:00 AM - 02:00 PM");
+  const [image, setImage] = useState("");
+
+  // Edit Doctor form state
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [editingDoctorId, setEditingDoctorId] = useState<string | null>(null);
+  const [editName, setEditName] = useState("");
+  const [editSpecialty, setEditSpecialty] = useState("");
+  const [editDept, setEditDept] = useState("General Medicine");
+  const [editSchedule, setEditSchedule] = useState("09:00 AM - 02:00 PM");
+  const [editImage, setEditImage] = useState("");
+  const [editAvailability, setEditAvailability] = useState<Doctor["availability"]>("Available");
+
+  const handleOpenEditModal = (doc: Doctor) => {
+    setEditingDoctorId(doc.id);
+    setEditName(doc.name);
+    setEditSpecialty(doc.specialty);
+    setEditDept(doc.dept);
+    setEditSchedule(doc.schedule);
+    setEditImage(doc.image || "");
+    setEditAvailability(doc.availability);
+    setEditModalOpen(true);
+  };
+
+  const handleUpdateDoctor = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingDoctorId || !editName || !editSpecialty) return;
+
+    updateDoctor(editingDoctorId, {
+      name: editName,
+      specialty: editSpecialty,
+      dept: editDept,
+      schedule: editSchedule,
+      image: editImage,
+      availability: editAvailability
+    });
+
+    setEditModalOpen(false);
+    setEditingDoctorId(null);
+  };
 
   // Filter departments
   const departmentsList = ["All", "General Medicine", "Surgery", "Gynecology", "Ophthalmology", "Cardiology", "Pediatrics"];
@@ -43,13 +82,15 @@ export default function DoctorsPage() {
       dept,
       availability: "Available",
       schedule,
-      leaves: []
+      leaves: [],
+      image
     });
 
     // Reset
     setName("");
     setSpecialty("");
     setSchedule("09:00 AM - 02:00 PM");
+    setImage("");
     setAddModalOpen(false);
   };
 
@@ -151,7 +192,22 @@ export default function DoctorsPage() {
                 {/* HEADER ROW */}
                 <div className="flex items-start justify-between">
                   <div className="flex items-center space-x-3">
-                    <div className="h-10 w-10 rounded-xl bg-teal-50 dark:bg-teal-950/30 text-teal-600 dark:text-teal-400 flex items-center justify-center font-bold">
+                    {doc.image ? (
+                      <img 
+                        src={doc.image.startsWith('http') ? doc.image : `/${doc.image}`} 
+                        alt={doc.name} 
+                        className="h-12 w-12 rounded-xl object-cover border border-slate-200 dark:border-slate-800 shadow-sm"
+                        onError={(e) => {
+                          (e.target as HTMLElement).style.display = 'none';
+                          const fallback = (e.target as HTMLElement).nextElementSibling as HTMLElement;
+                          if (fallback) fallback.style.display = 'flex';
+                        }}
+                      />
+                    ) : null}
+                    <div 
+                      className="h-12 w-12 rounded-xl bg-teal-50 dark:bg-teal-950/30 text-teal-600 dark:text-teal-400 flex items-center justify-center font-bold"
+                      style={{ display: doc.image ? 'none' : 'flex' }}
+                    >
                       <Stethoscope className="h-5.5 w-5.5" />
                     </div>
                     <div>
@@ -175,19 +231,27 @@ export default function DoctorsPage() {
                 </div>
               </div>
 
-              {/* ACTION: INTERACTIVE TOGGLE AVAILABILITY */}
+              {/* ACTION: INTERACTIVE TOGGLE AVAILABILITY & EDIT */}
               <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                <span className="text-[9px] font-bold text-slate-400 uppercase">Availability Action</span>
-                <select
-                  value={doc.availability}
-                  onChange={(e) => updateDoctor(doc.id, { availability: e.target.value as Doctor["availability"] })}
-                  className="px-2 py-1 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-[10px] font-bold text-slate-700 dark:text-white rounded-lg focus:outline-none"
+                <button
+                  onClick={() => handleOpenEditModal(doc)}
+                  className="px-2.5 py-1 text-slate-500 hover:text-teal-600 dark:text-slate-400 dark:hover:text-teal-400 hover:bg-slate-50 dark:hover:bg-slate-950/30 rounded-lg transition font-bold text-[10px]"
                 >
-                  <option value="Available">Available</option>
-                  <option value="In Surgery">In Surgery</option>
-                  <option value="Busy">Busy</option>
-                  <option value="On Leave">On Leave</option>
-                </select>
+                  Edit Profile
+                </button>
+                <div className="flex items-center space-x-1.5">
+                  <span className="text-[9px] font-bold text-slate-400 uppercase">Status:</span>
+                  <select
+                    value={doc.availability}
+                    onChange={(e) => updateDoctor(doc.id, { availability: e.target.value as Doctor["availability"] })}
+                    className="px-2 py-1 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-[10px] font-bold text-slate-700 dark:text-white rounded-lg focus:outline-none"
+                  >
+                    <option value="Available">Available</option>
+                    <option value="In Surgery">In Surgery</option>
+                    <option value="Busy">Busy</option>
+                    <option value="On Leave">On Leave</option>
+                  </select>
+                </div>
               </div>
             </motion.div>
           ))}
@@ -250,6 +314,19 @@ export default function DoctorsPage() {
                     />
                   </div>
 
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1.5">
+                      Doctor Image Path / URL
+                    </label>
+                    <input
+                      type="text"
+                      value={image}
+                      onChange={(e) => setImage(e.target.value)}
+                      placeholder="e.g. images/dr_lal_kishnani.png or https://example.com/doc.jpg"
+                      className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-800 dark:text-white text-xs focus:outline-none focus:border-teal-500 transition"
+                    />
+                  </div>
+
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1.5">
@@ -285,6 +362,162 @@ export default function DoctorsPage() {
                     className="w-full mt-4 py-2.5 bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs rounded-xl shadow-md transition active:scale-98"
                   >
                     Empanel and Issue Duty Ticket
+                  </button>
+                </form>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+
+        {/* MODAL: EDIT DOCTOR */}
+        <AnimatePresence>
+          {editModalOpen && (
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => { setEditModalOpen(false); setEditingDoctorId(null); }}
+                className="fixed inset-0 z-40 bg-slate-900/50 backdrop-blur-sm"
+              />
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="fixed inset-x-4 top-1/2 -translate-y-1/2 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 max-w-md w-full bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-2xl z-50 border border-slate-200 dark:border-slate-800"
+              >
+                <div className="flex justify-between items-center mb-6 pb-3 border-b border-slate-100 dark:border-slate-800">
+                  <h3 className="font-extrabold text-slate-800 dark:text-white text-base">Edit Specialist Profile</h3>
+                  <button
+                    onClick={() => { setEditModalOpen(false); setEditingDoctorId(null); }}
+                    className="p-1 rounded-md text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
+
+                <form onSubmit={handleUpdateDoctor} className="space-y-4">
+                  {/* PREVIEW CONTAINER */}
+                  <div className="flex items-center space-x-4 p-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl">
+                    <div className="h-16 w-16 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex items-center justify-center relative">
+                      {editImage ? (
+                        <img 
+                          src={editImage.startsWith('http') ? editImage : `/${editImage}`} 
+                          alt="Preview" 
+                          className="h-full w-full object-cover"
+                          onError={(e) => {
+                            (e.target as HTMLElement).style.display = 'none';
+                            const fallback = (e.target as HTMLElement).nextElementSibling as HTMLElement;
+                            if (fallback) fallback.style.display = 'flex';
+                          }}
+                        />
+                      ) : null}
+                      <div 
+                        className="h-full w-full bg-teal-50 dark:bg-teal-950/30 text-teal-600 dark:text-teal-400 flex items-center justify-center font-bold"
+                        style={{ display: editImage ? 'none' : 'flex' }}
+                      >
+                        <Stethoscope className="h-7 w-7" />
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-xs text-slate-800 dark:text-white">Profile Photo Preview</h4>
+                      <p className="text-[10px] text-slate-400">Preview changes dynamically as you type the image path below</p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1.5">
+                      Doctor Full Name
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={editName}
+                      onChange={(e) => setEditName(e.target.value)}
+                      placeholder="e.g. Dr. Rajesh Kishnani"
+                      className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-800 dark:text-white text-xs focus:outline-none focus:border-teal-500 transition"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1.5">
+                      Medical Specialty Description
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={editSpecialty}
+                      onChange={(e) => setEditSpecialty(e.target.value)}
+                      placeholder="e.g. Chief Surgeon - Laparoscopic Specialist"
+                      className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-800 dark:text-white text-xs focus:outline-none focus:border-teal-500 transition"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1.5">
+                      Doctor Image Path / URL
+                    </label>
+                    <input
+                      type="text"
+                      value={editImage}
+                      onChange={(e) => setEditImage(e.target.value)}
+                      placeholder="e.g. images/dr_lal_kishnani.png or https://example.com/doc.jpg"
+                      className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-800 dark:text-white text-xs focus:outline-none focus:border-teal-500 transition"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1.5">
+                        Clinical Department
+                      </label>
+                      <select
+                        value={editDept}
+                        onChange={(e) => setEditDept(e.target.value)}
+                        className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-800 dark:text-white text-xs focus:outline-none focus:border-teal-500 transition"
+                      >
+                        {departmentsList.filter(d => d !== "All").map((d) => (
+                          <option key={d} value={d}>{d}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1.5">
+                        OPD Schedule Timings
+                      </label>
+                      <input
+                        type="text"
+                        value={editSchedule}
+                        onChange={(e) => setEditSchedule(e.target.value)}
+                        placeholder="e.g. 09:00 AM - 02:00 PM"
+                        className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-800 dark:text-white text-xs focus:outline-none focus:border-teal-500 transition"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1.5">
+                      Availability Status
+                    </label>
+                    <select
+                      value={editAvailability}
+                      onChange={(e) => setEditAvailability(e.target.value as Doctor["availability"])}
+                      className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-800 dark:text-white text-xs focus:outline-none focus:border-teal-500 transition"
+                    >
+                      <option value="Available">Available</option>
+                      <option value="In Surgery">In Surgery</option>
+                      <option value="Busy">Busy</option>
+                      <option value="On Leave">On Leave</option>
+                    </select>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full mt-4 py-2.5 bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs rounded-xl shadow-md transition active:scale-98"
+                  >
+                    Save Changes & Update Profile
                   </button>
                 </form>
               </motion.div>
